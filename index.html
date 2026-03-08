@@ -38,24 +38,29 @@ color:white;
 
 const channel="UC6wYoQiwRAFNf9MHlvJQbKA";
 
-fetch("https://api.rss2json.com/v1/api.json?rss_url=https://www.youtube.com/feeds/videos.xml?channel_id="+channel)
-.then(r=>r.json())
+fetch("https://www.youtube.com/feeds/videos.xml?channel_id="+channel)
+.then(r=>r.text())
+.then(str => new window.DOMParser().parseFromString(str,"text/xml"))
 .then(data=>{
 
+let items=data.querySelectorAll("entry")
 let html=""
 
-data.items.slice(0,3).forEach(v=>{
+for(let i=0;i<3;i++){
 
-let id=v.link.split("v=")[1]
+let link=items[i].querySelector("link").getAttribute("href")
+let id=link.split("v=")[1]
+
+let title=items[i].querySelector("title").textContent
 
 html+=`
-<a href="${v.link}" target="_blank">
+<a href="${link}" target="_blank">
 <img src="https://img.youtube.com/vi/${id}/hqdefault.jpg">
-<p>${v.title}</p>
+<p>${title}</p>
 </a>
 `
 
-})
+}
 
 document.getElementById("videos").innerHTML=html
 
