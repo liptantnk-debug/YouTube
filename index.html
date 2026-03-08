@@ -4,7 +4,6 @@
 <title>Unlock Link</title>
 
 <style>
-
 body{
 text-align:center;
 font-family:Arial;
@@ -45,51 +44,61 @@ font-size:18px;
 margin-bottom:20px;
 opacity:0.8;
 }
-
 </style>
 
 <script>
 
-let seconds = 5;
+const cooldown = 5;
 
-function countdown(){
+function checkCooldown(){
 
-let timer = document.getElementById("timer");
+let lastClick = localStorage.getItem("lastUnlock");
 let button = document.getElementById("unlockBtn");
+let timer = document.getElementById("timer");
+
+if(!lastClick){
+button.disabled=false;
+timer.innerHTML="Ready to unlock";
+return;
+}
+
+let timePassed = Math.floor((Date.now() - lastClick)/1000);
+let timeLeft = cooldown - timePassed;
+
+if(timeLeft <= 0){
+button.disabled=false;
+timer.innerHTML="Ready to unlock";
+}else{
+
+button.disabled=true;
 
 let interval = setInterval(function(){
 
-seconds--;
+timeLeft--;
 
-timer.innerHTML = "Please wait " + seconds + " seconds";
+timer.innerHTML="Cooldown: "+timeLeft+"s";
 
-if(seconds <= 0){
-
+if(timeLeft<=0){
 clearInterval(interval);
-
-timer.innerHTML = "You can unlock now";
-
-button.disabled = false;
-
+button.disabled=false;
+timer.innerHTML="Ready to unlock";
 }
 
 },1000);
 
 }
 
+}
+
 function openAd(){
+
+localStorage.setItem("lastUnlock",Date.now());
 
 window.open("https://omg10.com/4/10697514","_blank");
 
-setTimeout(function(){
-
-window.location.href="https://sites.google.com/view/realraxsc/REDz-Hub-Script";
-
-},5000);
-
 }
 
-window.onload = countdown;
+window.onload = checkCooldown;
 
 </script>
 
@@ -100,10 +109,10 @@ window.onload = countdown;
 <h2>🔒 Link Locked</h2>
 
 <div id="timer" class="timer">
-Please wait 5 seconds
+Checking cooldown...
 </div>
 
-<button id="unlockBtn" class="unlock-btn" onclick="openAd()" disabled>
+<button id="unlockBtn" class="unlock-btn" onclick="openAd()">
 🚀 Unlock Link
 </button>
 
