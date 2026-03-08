@@ -20,40 +20,33 @@ display:flex;
 justify-content:center;
 align-items:center;
 font-family:Arial, sans-serif;
-color:#fff;
+color:#111;
 overflow:hidden;
 text-align:center;
 
-/* Japanese Black & White Background */
+/* Japanese white theme */
 
 background:
-radial-gradient(circle at 20% 30%, rgba(255,255,255,0.08), transparent 40%),
-radial-gradient(circle at 80% 70%, rgba(255,255,255,0.06), transparent 40%),
+radial-gradient(circle at center,
+rgba(255,255,255,0) 55%,
+rgba(150,150,150,0.35) 100%),
 repeating-linear-gradient(
 45deg,
-#000 0px,
-#000 2px,
-#111 2px,
-#111 6px
+#ffffff 0px,
+#ffffff 6px,
+#f0f0f0 6px,
+#f0f0f0 12px
 );
 
 background-size:200% 200%;
-animation:inkMove 18s linear infinite;
+animation:bgmove 20s linear infinite;
 }
 
-@keyframes inkMove{
+@keyframes bgmove{
 
-0%{
-background-position:0% 0%;
-}
-
-50%{
-background-position:100% 100%;
-}
-
-100%{
-background-position:0% 0%;
-}
+0%{background-position:0% 0%;}
+50%{background-position:100% 100%;}
+100%{background-position:0% 0%;}
 
 }
 
@@ -61,10 +54,10 @@ background-position:0% 0%;
 width:90%;
 max-width:420px;
 padding:30px;
-background:rgba(0,0,0,0.65);
-border-radius:15px;
+background:rgba(255,255,255,0.85);
+border-radius:16px;
 backdrop-filter:blur(6px);
-box-shadow:0 0 25px rgba(0,0,0,0.8);
+box-shadow:0 10px 30px rgba(0,0,0,0.15);
 }
 
 #status{
@@ -72,12 +65,12 @@ margin-bottom:15px;
 font-size:18px;
 }
 
-/* Progress bar */
+/* progress */
 
 #progress{
 width:100%;
 height:10px;
-background:rgba(255,255,255,0.15);
+background:#e5e5e5;
 border-radius:30px;
 overflow:hidden;
 margin-bottom:20px;
@@ -89,11 +82,10 @@ height:100%;
 width:0%;
 background:linear-gradient(
 90deg,
-#ffffff,
-#bbbbbb,
-#ffffff
+#888,
+#bbb,
+#888
 );
-
 background-size:200% 100%;
 animation:shine 2s linear infinite;
 transition:width 0.1s linear;
@@ -101,17 +93,12 @@ transition:width 0.1s linear;
 
 @keyframes shine{
 
-0%{
-background-position:200% 0;
-}
-
-100%{
-background-position:-200% 0;
-}
+0%{background-position:200% 0;}
+100%{background-position:-200% 0;}
 
 }
 
-/* ปุ่ม */
+/* button */
 
 button{
 width:100%;
@@ -119,10 +106,10 @@ padding:16px;
 font-size:18px;
 border:none;
 border-radius:12px;
-background:linear-gradient(#444,#111);
+background:linear-gradient(#777,#444);
 color:white;
 cursor:pointer;
-box-shadow:0 10px 25px rgba(0,0,0,0.6);
+box-shadow:0 8px 20px rgba(0,0,0,0.2);
 transition:all 0.2s ease;
 }
 
@@ -134,7 +121,7 @@ button:active{
 transform:scale(0.96);
 }
 
-/* ปุ่มปลายทาง */
+/* target link */
 
 #target{
 display:none;
@@ -144,12 +131,12 @@ margin-top:20px;
 #target a{
 display:block;
 padding:14px;
-background:linear-gradient(#ffffff,#bbbbbb);
+background:linear-gradient(#ddd,#bbb);
 border-radius:10px;
 color:black;
 text-decoration:none;
 font-size:18px;
-box-shadow:0 8px 20px rgba(0,0,0,0.6);
+box-shadow:0 6px 16px rgba(0,0,0,0.15);
 transition:all 0.2s ease;
 }
 
@@ -161,52 +148,56 @@ transform:translateY(-3px);
 transform:scale(0.95);
 }
 
-/* Bubble */
+/* Japanese ink circles */
 
 .bubble{
 position:fixed;
 border-radius:50%;
-background:rgba(255,255,255,0.08);
-animation:float 10s linear infinite;
+border:3px solid rgba(0,0,0,0.15);
+animation:float 12s linear infinite;
 }
 
 @keyframes float{
 
 0%{
-transform:translateY(30vh) scale(0.5);
+transform:translateY(40vh) scale(0.6);
 opacity:0;
 }
 
 20%{
-opacity:1;
+opacity:0.5;
 }
 
 100%{
-transform:translateY(-20vh) scale(1);
+transform:translateY(-20vh) scale(1.2);
 opacity:0;
 }
 
 }
 
-/* เส้นตก */
+/* brush stroke lines */
 
 .line{
 position:fixed;
 width:2px;
-height:40px;
-background:rgba(255,255,255,0.2);
-animation:fall 4s linear infinite;
+height:60px;
+background:linear-gradient(
+transparent,
+rgba(0,0,0,0.2),
+transparent
+);
+animation:fall 5s linear infinite;
 }
 
 @keyframes fall{
 
 0%{
-transform:translateY(-50px);
+transform:translateY(-60px);
 opacity:0;
 }
 
 20%{
-opacity:1;
+opacity:0.4;
 }
 
 100%{
@@ -244,14 +235,14 @@ opacity:0;
 
 let adOpened=false;
 
-/* Bubble effect */
+/* ink circle */
 
 function createBubble(){
 
 let b=document.createElement("div");
 b.className="bubble";
 
-let size=Math.random()*120+40;
+let size=Math.random()*120+60;
 
 b.style.width=size+"px";
 b.style.height=size+"px";
@@ -260,14 +251,14 @@ b.style.left=Math.random()*100+"%";
 
 document.body.appendChild(b);
 
-setTimeout(()=>{b.remove()},10000);
+setTimeout(()=>{b.remove()},12000);
 
 }
 
-setInterval(createBubble,600);
+setInterval(createBubble,1200);
 
 
-/* falling lines */
+/* brush line */
 
 function createLine(){
 
@@ -278,11 +269,11 @@ l.style.left=Math.random()*100+"%";
 
 document.body.appendChild(l);
 
-setTimeout(()=>{l.remove()},4000);
+setTimeout(()=>{l.remove()},5000);
 
 }
 
-setInterval(createLine,600);
+setInterval(createLine,800);
 
 
 /* open ads */
@@ -296,7 +287,6 @@ adOpened=true;
 document.getElementById("status").innerText="Return to this page...";
 
 }
-
 
 /* detect return */
 
