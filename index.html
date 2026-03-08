@@ -1,77 +1,128 @@
+```html
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <title>Unlock Link</title>
 
 <style>
+
 body{
-text-align:center;
-font-family:Arial;
-margin-top:120px;
 background:#0f172a;
 color:white;
+font-family:Arial;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+margin:0;
 }
 
-.unlock-btn{
-padding:14px 40px;
+.box{
+text-align:center;
+background:#111827;
+padding:40px;
+border-radius:14px;
+width:320px;
+box-shadow:0 0 20px rgba(0,0,0,0.6);
+}
+
+h2{
+margin-bottom:20px;
+}
+
+.status{
+margin-bottom:20px;
+opacity:0.8;
+}
+
+.btn{
+padding:14px 35px;
 font-size:18px;
-font-weight:bold;
 border:none;
 border-radius:8px;
+cursor:pointer;
 background:linear-gradient(45deg,#ff0000,#ff5050);
 color:white;
-cursor:pointer;
 }
 
-.unlock-btn:disabled{
+.btn:disabled{
 background:#555;
 cursor:not-allowed;
 }
 
-.timer{
-font-size:18px;
-margin-bottom:20px;
-opacity:0.8;
+.link{
+display:none;
+margin-top:20px;
 }
+
+.link a{
+color:#22c55e;
+font-weight:bold;
+text-decoration:none;
+}
+
 </style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h2>🔒 Link Locked</h2>
+
+<div id="status" class="status">Ready</div>
+
+<button id="btn" class="btn">Unlock Link</button>
+
+<div id="targetLink" class="link">
+<a href="https://example.com" target="_blank">
+Go To Website
+</a>
+</div>
+
+</div>
 
 <script>
 
-const cooldown = 5;
+const adsLink="https://omg10.com/4/10697514";
+const cooldown=5;
 
-function check(){
+const btn=document.getElementById("btn");
+const status=document.getElementById("status");
+const target=document.getElementById("targetLink");
 
-let last = localStorage.getItem("unlockTime");
-let btn = document.getElementById("btn");
-let timer = document.getElementById("timer");
+function checkCooldown(){
+
+let last=localStorage.getItem("unlockTime");
 
 if(!last){
+status.innerText="Ready";
 btn.disabled=false;
-timer.innerText="Ready";
 return;
 }
 
-let diff = Math.floor((Date.now() - last)/1000);
-let left = cooldown - diff;
+let diff=Math.floor((Date.now()-last)/1000);
+let left=cooldown-diff;
 
-if(left <= 0){
+if(left<=0){
+status.innerText="Ready";
 btn.disabled=false;
-timer.innerText="Ready";
 }else{
 
 btn.disabled=true;
-timer.innerText="Cooldown: "+left+"s";
+status.innerText="Cooldown: "+left+"s";
 
-let interval=setInterval(()=>{
+let timer=setInterval(()=>{
 
 left--;
 
 if(left<=0){
-clearInterval(interval);
+clearInterval(timer);
 btn.disabled=false;
-timer.innerText="Ready";
+status.innerText="Ready";
 }else{
-timer.innerText="Cooldown: "+left+"s";
+status.innerText="Cooldown: "+left+"s";
 }
 
 },1000);
@@ -80,33 +131,42 @@ timer.innerText="Cooldown: "+left+"s";
 
 }
 
-function unlock(){
+btn.onclick=function(){
 
 localStorage.setItem("unlockTime",Date.now());
 
-window.open("https://omg10.com/4/10697514","_blank");
+window.open(adsLink,"_blank");
 
-setTimeout(()=>{
-location.reload();
-},300);
+btn.disabled=true;
+
+let time=5;
+
+status.innerText="Please wait "+time+"s";
+
+let timer=setInterval(()=>{
+
+time--;
+
+status.innerText="Please wait "+time+"s";
+
+if(time<=0){
+
+clearInterval(timer);
+
+status.innerText="Unlocked";
+
+target.style.display="block";
 
 }
 
-window.onload = check;
+},1000);
+
+}
+
+checkCooldown();
 
 </script>
 
-</head>
-
-<body>
-
-<h2>🔒 Link Locked</h2>
-
-<div id="timer" class="timer">Checking...</div>
-
-<button id="btn" class="unlock-btn" onclick="unlock()">
-🚀 Unlock Link
-</button>
-
 </body>
 </html>
+```
