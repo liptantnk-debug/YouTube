@@ -24,11 +24,15 @@ color:#fff;
 overflow:hidden;
 text-align:center;
 
+/* พื้นหลัง Neutron Star */
+
 background:
 radial-gradient(circle at center,
-rgba(0,0,0,0) 40%,
-rgba(0,0,0,0.65) 100%),
-linear-gradient(120deg,#052a47,#00a8a8,#0d6efd);
+rgba(255,255,255,0.35) 0%,
+rgba(220,220,220,0.25) 25%,
+rgba(0,0,0,0.65) 70%,
+rgba(0,0,0,0.9) 100%),
+linear-gradient(120deg,#0f0f0f,#5a5a5a,#cfcfcf,#5a5a5a,#0f0f0f);
 
 background-size:100% 100%,300% 300%;
 animation:bgmove 12s ease infinite;
@@ -66,8 +70,6 @@ overflow:hidden;
 margin-bottom:20px;
 display:none;
 }
-
-/* 🔴 Progress Bar สีแดงสด */
 
 #bar{
 height:100%;
@@ -234,8 +236,6 @@ opacity:0;
 
 let adOpened=false;
 
-/* Bubble */
-
 function createBubble(){
 
 let b=document.createElement("div");
@@ -256,9 +256,6 @@ setTimeout(()=>{b.remove()},10000);
 
 setInterval(createBubble,600);
 
-
-/* เส้นตก */
-
 function createLine(){
 
 let l=document.createElement("div");
@@ -274,9 +271,6 @@ setTimeout(()=>{l.remove()},4000);
 
 setInterval(createLine,600);
 
-
-/* เปิด Ads */
-
 function openAds(){
 
 window.open("https://omg10.com/4/10697514","_blank");
@@ -286,9 +280,6 @@ adOpened=true;
 document.getElementById("status").innerText="Return to this page...";
 
 }
-
-
-/* กลับจาก Ads */
 
 document.addEventListener("visibilitychange",function(){
 
@@ -301,9 +292,6 @@ adOpened=false;
 }
 
 });
-
-
-/* Smooth countdown */
 
 function startCountdown(){
 
