@@ -1,357 +1,186 @@
 <!DOCTYPE html>
-<html>
+<html lang="th">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Get Link</title>
+<title>Access Page</title>
 
 <style>
-
-*{
-box-sizing:border-box;
-}
-
 body{
 margin:0;
-min-height:100vh;
+height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-font-family:Arial, sans-serif;
-color:#fff;
+flex-direction:column;
+background:#000;
+font-family:sans-serif;
+color:white;
 overflow:hidden;
-text-align:center;
-
-background:linear-gradient(120deg,#052a47,#00a8a8,#0d6efd);
-background-size:300% 300%;
-animation:bgmove 12s ease infinite;
 }
 
-@keyframes bgmove{
-0%{background-position:0% 50%;}
-50%{background-position:100% 50%;}
-100%{background-position:0% 50%;}
+/* Bubble background */
+.bubble{
+position:absolute;
+bottom:-100px;
+width:10px;
+height:10px;
+background:rgba(255,255,255,0.15);
+border-radius:50%;
+animation:rise linear infinite;
 }
 
-.container{
-width:90%;
-max-width:420px;
-padding:30px;
-background:rgba(0,0,0,0.55);
-border-radius:15px;
-backdrop-filter:blur(6px);
-box-shadow:0 0 25px rgba(0,0,0,0.6);
+@keyframes rise{
+0%{transform:translateY(0) scale(1);}
+100%{transform:translateY(-120vh) scale(1.5);}
 }
 
-#status{
-margin-bottom:15px;
-font-size:18px;
-}
-
-/* Progress */
-
-#progress{
-width:100%;
-height:18px;
-background:#111;
-border-radius:10px;
-overflow:hidden;
-margin-bottom:20px;
-display:none;
-}
-
-#bar{
-
-height:100%;
-width:0%;
-
-/* สีทอง */
-
-background:linear-gradient(
-90deg,
-#ffd700,
-#fff3a0,
-#ffd700,
-#ffc400,
-#ffd700
-);
-
-background-size:300% 100%;
-
-animation:goldMove 2s linear infinite;
-
-box-shadow:
-0 0 10px rgba(255,215,0,0.8),
-0 0 20px rgba(255,215,0,0.4);
-
-transition:width 0.05s linear;
-
-}
-
-@keyframes goldMove{
-
-0%{
-background-position:0% 0%;
-}
-
-100%{
-background-position:300% 0%;
-}
-
-}
-
-/* Button */
-
+/* Buttons */
 button{
-width:100%;
-padding:16px;
-font-size:18px;
+width:220px;
+padding:15px;
+margin:10px;
+font-size:16px;
 border:none;
 border-radius:12px;
-background:linear-gradient(#ff4b4b,#ff0000);
-color:white;
 cursor:pointer;
-box-shadow:0 10px 25px rgba(0,0,0,0.6);
-transition:all 0.2s ease;
+transition:all .2s ease;
 }
 
 button:hover{
-transform:translateY(-3px);
+transform:translateY(-4px);
 }
 
 button:active{
-transform:scale(0.96);
-box-shadow:0 4px 10px rgba(0,0,0,0.6);
+transform:scale(0.92);
 }
 
-/* Target */
-
-#target{
-display:none;
-margin-top:20px;
-}
-
-#target a{
-display:block;
-padding:14px;
-background:linear-gradient(#00e081,#00c26e);
-border-radius:10px;
+/* Ads button */
+#adsBtn{
+background:linear-gradient(45deg,#ff8a00,#ff3d00);
 color:white;
-text-decoration:none;
-font-size:18px;
-box-shadow:0 8px 20px rgba(0,0,0,0.6);
-transition:all 0.2s ease;
 }
 
-#target a:hover{
-transform:translateY(-3px);
+/* Target button */
+#targetBtn{
+background:linear-gradient(45deg,#ffd700,#ffb300);
+color:black;
+display:none;
 }
 
-#target a:active{
-transform:scale(0.95);
-}
-
-/* Bubble */
-
-.bubble{
+/* Progress Bar */
+.progressBox{
 position:fixed;
-border-radius:50%;
-background:rgba(255,255,255,0.15);
-animation:float 10s linear infinite;
+bottom:20px;
+left:20px;
+width:200px;
+height:10px;
+background:rgba(255,255,255,0.1);
+border-radius:10px;
+overflow:hidden;
 }
 
-@keyframes float{
-
-0%{
-transform:translateY(30vh) scale(0.5);
-opacity:0;
+.progress{
+height:100%;
+width:0%;
+background:linear-gradient(90deg,#ffd700,#ffb300,#ffd700);
+transition:width 0.1s linear;
 }
-
-20%{
-opacity:1;
-}
-
-100%{
-transform:translateY(-20vh) scale(1);
-opacity:0;
-}
-
-}
-
-/* Line */
-
-.line{
-position:fixed;
-width:2px;
-height:40px;
-background:rgba(255,255,255,0.4);
-animation:fall 4s linear infinite;
-}
-
-@keyframes fall{
-0%{
-transform:translateY(-50px);
-opacity:0;
-}
-20%{
-opacity:1;
-}
-100%{
-transform:translateY(110vh);
-opacity:0;
-}
-}
-
 </style>
-
 </head>
 
 <body>
 
-<div class="container">
+<h2 id="status">กดปุ่มโฆษณาก่อน</h2>
 
-<div id="status">Click Get Link</div>
+<button id="adsBtn">ดูโฆษณา</button>
+<button id="targetBtn" onclick="goTarget()">ไปหน้าปลายทาง</button>
 
-<div id="progress">
-<div id="bar"></div>
-</div>
-
-<button onclick="openAds()">🚀 Get Link</button>
-
-<div id="target">
-<a href="https://sites.google.com/view/realraxsc/home-%E0%B8%AB%E0%B8%99%E0%B8%B2%E0%B9%80%E0%B8%A7%E0%B9%87%E0%B8%9A%E0%B8%AB%E0%B8%A5%E0%B8%B1%E0%B8%81" target="_blank">
-➡ Go To Website
-</a>
-</div>
-
+<div class="progressBox">
+<div class="progress" id="bar"></div>
 </div>
 
 <script>
 
-/* รีเซ็ตเวลารีเฟรชมือถือ */
+const ADS_LINK = "https://omg10.com/4/10697514"
+const TARGET_LINK = "https://sites.google.com/view/realraxsc/home-%E0%B8%AB%E0%B8%99%E0%B8%B2%E0%B9%80%E0%B8%A7%E0%B8%9A%E0%B8%AB%E0%B8%A5%E0%B8%81"
 
-window.onload=function(){
+let cooldown = false
 
-document.getElementById("progress").style.display="none";
-document.getElementById("target").style.display="none";
-document.getElementById("bar").style.width="0%";
-document.getElementById("status").innerText="Click Get Link";
+const statusText = document.getElementById("status")
+const targetBtn = document.getElementById("targetBtn")
+const bar = document.getElementById("bar")
 
-}
+function startCooldown(){
 
-let adOpened=false;
+cooldown = true
+let time = 5
+let progress = 0
 
-/* Bubble */
+statusText.innerText = "กรุณารอ 5 วินาที..."
 
-function createBubble(){
+const interval = setInterval(()=>{
 
-let b=document.createElement("div");
-b.className="bubble";
+progress += 2
+bar.style.width = progress + "%"
 
-let size=Math.random()*120+40;
+},100)
 
-b.style.width=size+"px";
-b.style.height=size+"px";
+const timer = setInterval(()=>{
 
-b.style.left=Math.random()*100+"%";
+time--
+statusText.innerText = "กรุณารอ " + time + " วินาที..."
 
-document.body.appendChild(b);
+if(time <= 0){
 
-setTimeout(()=>{b.remove()},10000);
+clearInterval(timer)
+clearInterval(interval)
 
-}
-
-setInterval(createBubble,600);
-
-/* Line */
-
-function createLine(){
-
-let l=document.createElement("div");
-l.className="line";
-
-l.style.left=Math.random()*100+"%";
-
-document.body.appendChild(l);
-
-setTimeout(()=>{l.remove()},4000);
+statusText.innerText = "ไปหน้าปลายทางได้แล้ว"
+targetBtn.style.display="block"
 
 }
 
-setInterval(createLine,600);
-
-/* Ads */
-
-function openAds(){
-
-window.open("https://omg10.com/4/10697514","_blank");
-
-adOpened=true;
-
-document.getElementById("status").innerText="Return to this page...";
+},1000)
 
 }
 
-/* กลับหน้า */
+document.getElementById("adsBtn").onclick = function(){
 
-document.addEventListener("visibilitychange",function(){
+window.open(ADS_LINK,"_blank")
 
-if(!document.hidden && adOpened){
-
-startCountdown();
-adOpened=false;
-
-}
-
-});
-
-/* Countdown */
-
-function startCountdown(){
-
-let duration=5000;
-let start=Date.now();
-
-let status=document.getElementById("status");
-let progress=document.getElementById("progress");
-let bar=document.getElementById("bar");
-
-progress.style.display="block";
-
-function update(){
-
-let now=Date.now();
-let elapsed=now-start;
-
-let percent=Math.min(elapsed/duration*100,100);
-
-bar.style.width=percent+"%";
-
-let seconds=Math.ceil((duration-elapsed)/1000);
-
-status.innerText="Please wait "+seconds+"s";
-
-if(percent<100){
-
-requestAnimationFrame(update);
-
-}else{
-
-status.innerText="Link Ready";
-
-progress.style.display="none";
-
-document.getElementById("target").style.display="block";
+setTimeout(()=>{
+startCooldown()
+},500)
 
 }
 
+function goTarget(){
+window.location.href = TARGET_LINK
 }
 
-update();
+/* Bubble generator */
+
+for(let i=0;i<35;i++){
+
+let bubble=document.createElement("div")
+bubble.className="bubble"
+
+bubble.style.left=Math.random()*100+"%"
+bubble.style.animationDuration=(5+Math.random()*5)+"s"
+bubble.style.opacity=Math.random()
+
+document.body.appendChild(bubble)
 
 }
+
+/* FIX รีเฟรชมือถือ */
+
+window.addEventListener("pageshow",function(event){
+if(event.persisted){
+location.reload()
+}
+})
 
 </script>
 
