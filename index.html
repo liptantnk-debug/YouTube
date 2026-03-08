@@ -340,17 +340,36 @@ update();
 }
 
 
-/* FIX รีเฟรชทุกระบบ */
+/* ===== UNIVERSAL REFRESH FIX (IG / FB / Safari / Android / PC) ===== */
 
-window.addEventListener("pageshow",function(e){
+(function(){
+
+// reload ถ้า browser restore จาก cache
+if (window.performance && performance.navigation.type === 2) {
+location.reload(true);
+}
+
+// แก้ Safari / iOS bfcache
+window.addEventListener("pageshow", function(e){
 if(e.persisted){
-window.location.reload();
+location.reload();
 }
 });
 
-window.addEventListener("pagehide",function(){
-document.body.style.display="none";
+// ตรวจ Instagram / Facebook WebView
+let ua = navigator.userAgent || "";
+
+if(ua.includes("Instagram") || ua.includes("FBAN") || ua.includes("FBAV")){
+
+window.addEventListener("focus",function(){
+setTimeout(function(){
+location.reload();
+},50);
 });
+
+}
+
+})();
 
 </script>
 
