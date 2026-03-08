@@ -30,10 +30,6 @@ transform:translateY(-2px);
 background:linear-gradient(45deg,#ff3030,#ff7070);
 }
 
-.unlock-btn:active{
-transform:scale(0.96);
-}
-
 .unlock-btn:disabled{
 background:#555;
 cursor:not-allowed;
@@ -50,55 +46,57 @@ opacity:0.8;
 
 const cooldown = 5;
 
-function checkCooldown(){
+function updateCooldown(){
 
-let lastClick = localStorage.getItem("lastUnlock");
 let button = document.getElementById("unlockBtn");
 let timer = document.getElementById("timer");
 
-if(!lastClick){
+let last = localStorage.getItem("unlockTime");
+
+if(!last){
 button.disabled=false;
-timer.innerHTML="Ready to unlock";
+timer.innerText="Ready";
 return;
 }
 
-let timePassed = Math.floor((Date.now() - lastClick)/1000);
-let timeLeft = cooldown - timePassed;
+let passed = Math.floor((Date.now() - last)/1000);
+let left = cooldown - passed;
 
-if(timeLeft <= 0){
+if(left <= 0){
 button.disabled=false;
-timer.innerHTML="Ready to unlock";
-}else{
+timer.innerText="Ready";
+return;
+}
 
 button.disabled=true;
+timer.innerText="Cooldown: "+left+"s";
 
 let interval = setInterval(function(){
 
-timeLeft--;
+left--;
 
-timer.innerHTML="Cooldown: "+timeLeft+"s";
-
-if(timeLeft<=0){
+if(left <= 0){
 clearInterval(interval);
 button.disabled=false;
-timer.innerHTML="Ready to unlock";
+timer.innerText="Ready";
+}else{
+timer.innerText="Cooldown: "+left+"s";
 }
 
 },1000);
 
 }
 
-}
-
 function openAd(){
 
-localStorage.setItem("lastUnlock",Date.now());
+localStorage.setItem("unlockTime",Date.now());
 
 window.open("https://omg10.com/4/10697514","_blank");
 
 }
 
-window.onload = checkCooldown;
+window.addEventListener("load",updateCooldown);
+window.addEventListener("pageshow",updateCooldown);
 
 </script>
 
@@ -108,9 +106,7 @@ window.onload = checkCooldown;
 
 <h2>🔒 Link Locked</h2>
 
-<div id="timer" class="timer">
-Checking cooldown...
-</div>
+<div id="timer" class="timer">Checking...</div>
 
 <button id="unlockBtn" class="unlock-btn" onclick="openAd()">
 🚀 Unlock Link
