@@ -340,14 +340,16 @@ update();
 }
 
 
-/* FIX รีเฟรชทุกแพลตฟอร์ม */
+/* FIX รีเฟรชทุกระบบ */
 
-window.addEventListener("pageshow", function(event){
-
-if(event.persisted){
-location.reload();
+window.addEventListener("pageshow",function(e){
+if(e.persisted){
+window.location.reload();
 }
+});
 
+window.addEventListener("pagehide",function(){
+document.body.style.display="none";
 });
 
 </script>
