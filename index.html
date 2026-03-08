@@ -9,7 +9,9 @@
 
 <style>
 
-*{box-sizing:border-box;}
+*{
+box-sizing:border-box;
+}
 
 body{
 margin:0;
@@ -22,8 +24,15 @@ color:#fff;
 overflow:hidden;
 text-align:center;
 
-background:linear-gradient(120deg,#052a47,#00a8a8,#0d6efd);
-background-size:300% 300%;
+/* พื้นหลัง + ขอบมืด */
+
+background:
+radial-gradient(circle at center,
+rgba(0,0,0,0) 40%,
+rgba(0,0,0,0.65) 100%),
+linear-gradient(120deg,#052a47,#00a8a8,#0d6efd);
+
+background-size:100% 100%,300% 300%;
 animation:bgmove 12s ease infinite;
 }
 
@@ -48,7 +57,7 @@ margin-bottom:15px;
 font-size:18px;
 }
 
-/* progress */
+/* Progress bar */
 
 #progress{
 width:100%;
@@ -63,19 +72,35 @@ display:none;
 #bar{
 height:100%;
 width:0%;
-background:linear-gradient(90deg,#00ffb3,#00e081,#00ffb3);
+background:linear-gradient(
+90deg,
+#00ffb3,
+#00e081,
+#00ffb3
+);
+
 background-size:200% 100%;
+
 animation:shine 2s linear infinite;
+
 transition:width 0.1s linear;
+
 box-shadow:0 0 10px rgba(0,255,179,0.6);
 }
 
 @keyframes shine{
-0%{background-position:200% 0;}
-100%{background-position:-200% 0;}
+
+0%{
+background-position:200% 0;
 }
 
-/* button */
+100%{
+background-position:-200% 0;
+}
+
+}
+
+/* ปุ่ม */
 
 button{
 width:100%;
@@ -87,7 +112,19 @@ background:linear-gradient(#ff4b4b,#ff0000);
 color:white;
 cursor:pointer;
 box-shadow:0 10px 25px rgba(0,0,0,0.6);
+transition:all 0.2s ease;
 }
+
+button:hover{
+transform:translateY(-3px);
+}
+
+button:active{
+transform:scale(0.96);
+box-shadow:0 4px 10px rgba(0,0,0,0.6);
+}
+
+/* ปุ่มปลายทาง */
 
 #target{
 display:none;
@@ -102,7 +139,20 @@ border-radius:10px;
 color:white;
 text-decoration:none;
 font-size:18px;
+box-shadow:0 8px 20px rgba(0,0,0,0.6);
+transition:all 0.2s ease;
 }
+
+#target a:hover{
+transform:translateY(-3px);
+}
+
+#target a:active{
+transform:scale(0.95);
+box-shadow:0 4px 10px rgba(0,0,0,0.6);
+}
+
+/* Bubble */
 
 .bubble{
 position:fixed;
@@ -112,10 +162,24 @@ animation:float 10s linear infinite;
 }
 
 @keyframes float{
-0%{transform:translateY(30vh) scale(0.5);opacity:0;}
-20%{opacity:1;}
-100%{transform:translateY(-20vh) scale(1);opacity:0;}
+
+0%{
+transform:translateY(30vh) scale(0.5);
+opacity:0;
 }
+
+20%{
+opacity:1;
+}
+
+100%{
+transform:translateY(-20vh) scale(1);
+opacity:0;
+}
+
+}
+
+/* เส้นตก */
 
 .line{
 position:fixed;
@@ -126,12 +190,21 @@ animation:fall 4s linear infinite;
 }
 
 @keyframes fall{
-0%{transform:translateY(-50px);opacity:0;}
-20%{opacity:1;}
-100%{transform:translateY(110vh);opacity:0;}
+0%{
+transform:translateY(-50px);
+opacity:0;
+}
+20%{
+opacity:1;
+}
+100%{
+transform:translateY(110vh);
+opacity:0;
+}
 }
 
 </style>
+
 </head>
 
 <body>
@@ -156,64 +229,83 @@ animation:fall 4s linear infinite;
 
 <script>
 
-/* bubble */
+let adOpened=false;
+
+/* Bubble */
 
 function createBubble(){
+
 let b=document.createElement("div");
 b.className="bubble";
+
 let size=Math.random()*120+40;
+
 b.style.width=size+"px";
 b.style.height=size+"px";
+
 b.style.left=Math.random()*100+"%";
+
 document.body.appendChild(b);
+
 setTimeout(()=>{b.remove()},10000);
+
 }
 
 setInterval(createBubble,600);
 
-/* line */
+
+/* เส้นตก */
 
 function createLine(){
+
 let l=document.createElement("div");
 l.className="line";
+
 l.style.left=Math.random()*100+"%";
+
 document.body.appendChild(l);
+
 setTimeout(()=>{l.remove()},4000);
+
 }
 
 setInterval(createLine,600);
 
-/* ===== CPA SYSTEM ===== */
 
-let duration=5000;
-let startTime=sessionStorage.getItem("timer");
-
-/* open ads */
+/* เปิด Ads */
 
 function openAds(){
 
 window.open("https://omg10.com/4/10697514","_blank");
 
-startTime=Date.now();
-sessionStorage.setItem("timer",startTime);
+adOpened=true;
 
 document.getElementById("status").innerText="Return to this page...";
 
 }
 
-/* detect return */
+
+/* กลับจาก Ads */
 
 document.addEventListener("visibilitychange",function(){
 
-if(!document.hidden && startTime){
+if(!document.hidden && adOpened){
+
 startCountdown();
+
+adOpened=false;
+
 }
 
 });
 
-/* countdown */
+
+/* Smooth countdown */
 
 function startCountdown(){
+
+let duration=5000;
+let start=Date.now();
 
 let status=document.getElementById("status");
 let progress=document.getElementById("progress");
@@ -223,7 +315,8 @@ progress.style.display="block";
 
 function update(){
 
-let elapsed=Date.now()-startTime;
+let now=Date.now();
+let elapsed=now-start;
 
 let percent=Math.min(elapsed/duration*100,100);
 
@@ -231,9 +324,7 @@ bar.style.width=percent+"%";
 
 let seconds=Math.ceil((duration-elapsed)/1000);
 
-if(seconds>0){
 status.innerText="Please wait "+seconds+"s";
-}
 
 if(percent<100){
 
@@ -247,8 +338,6 @@ progress.style.display="none";
 
 document.getElementById("target").style.display="block";
 
-sessionStorage.removeItem("timer");
-
 }
 
 }
@@ -256,20 +345,6 @@ sessionStorage.removeItem("timer");
 update();
 
 }
-
-/* resume timer after refresh */
-
-if(startTime){
-startCountdown();
-}
-
-/* IG / FB WebView Fix */
-
-window.addEventListener("pageshow",function(e){
-if(e.persisted){
-location.reload();
-}
-});
 
 </script>
 
