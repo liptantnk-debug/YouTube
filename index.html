@@ -3,29 +3,80 @@
 <head>
 <meta charset="UTF-8">
 <title>Unlock Link</title>
+
+<style>
+
+body{
+background:#0f172a;
+color:white;
+font-family:Arial;
+text-align:center;
+margin-top:120px;
+}
+
+button{
+padding:14px 40px;
+font-size:18px;
+border:none;
+border-radius:8px;
+background:linear-gradient(45deg,#ff0000,#ff5050);
+color:white;
+cursor:pointer;
+box-shadow:0 6px 15px rgba(0,0,0,0.4);
+transition:0.2s;
+}
+
+button:hover{
+transform:translateY(-2px);
+}
+
+button:disabled{
+background:#555;
+cursor:not-allowed;
+}
+
+</style>
+
 </head>
 
-<body style="text-align:center;font-family:Arial;margin-top:100px;">
+<body>
 
-<h2>Link Locked</h2>
+<h2>🔒 Link Locked</h2>
 
 <p id="status">Ready</p>
 
-<button onclick="unlock()">Unlock</button>
+<button id="btn" onclick="unlock()">Unlock Link</button>
 
 <script>
 
 function unlock(){
 
-document.getElementById("status").innerText="Please wait 5 seconds...";
+const btn=document.getElementById("btn");
+const status=document.getElementById("status");
 
-window.open("https://omg10.com/4/10697514","_blank"); // ลิงก์ Ads
+btn.disabled=true;
 
-setTimeout(function(){
+window.open("https://omg10.com/4/10697514","_blank");
 
-window.location.href="https://example.com"; // ลิงก์ปลายทาง
+let time=5;
 
-},5000);
+status.innerText="Please wait "+time+"s";
+
+let timer=setInterval(function(){
+
+time--;
+
+status.innerText="Please wait "+time+"s";
+
+if(time<=0){
+
+clearInterval(timer);
+
+window.location.href="https://sites.google.com/view/realraxsc/home-%E0%B8%AB%E0%B8%99%E0%B8%B2%E0%B9%80%E0%B8%A7%E0%B9%87%E0%B8%9A%E0%B8%AB%E0%B8%A5%E0%B8%B1%E0%B8%81";
+
+}
+
+},1000);
 
 }
 
