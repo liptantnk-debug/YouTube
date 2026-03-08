@@ -3,25 +3,108 @@
 <head>
 <title>Unlock Link</title>
 
+<style>
+
+body{
+text-align:center;
+font-family:Arial;
+margin-top:120px;
+background:#0f172a;
+color:white;
+}
+
+.unlock-btn{
+padding:14px 40px;
+font-size:18px;
+font-weight:bold;
+border:none;
+border-radius:8px;
+background:linear-gradient(45deg,#ff0000,#ff5050);
+color:white;
+cursor:pointer;
+box-shadow:0 6px 20px rgba(0,0,0,0.4);
+transition:all 0.2s ease;
+}
+
+.unlock-btn:hover{
+transform:translateY(-2px);
+background:linear-gradient(45deg,#ff3030,#ff7070);
+}
+
+.unlock-btn:active{
+transform:scale(0.96);
+}
+
+.unlock-btn:disabled{
+background:#555;
+cursor:not-allowed;
+}
+
+.timer{
+font-size:18px;
+margin-bottom:20px;
+opacity:0.8;
+}
+
+</style>
+
 <script>
+
+let seconds = 5;
+
+function countdown(){
+
+let timer = document.getElementById("timer");
+let button = document.getElementById("unlockBtn");
+
+let interval = setInterval(function(){
+
+seconds--;
+
+timer.innerHTML = "Please wait " + seconds + " seconds";
+
+if(seconds <= 0){
+
+clearInterval(interval);
+
+timer.innerHTML = "You can unlock now";
+
+button.disabled = false;
+
+}
+
+},1000);
+
+}
+
 function openAd(){
+
 window.open("https://omg10.com/4/10697514","_blank");
 
 setTimeout(function(){
+
 window.location.href="https://sites.google.com/view/realraxsc/REDz-Hub-Script";
+
 },5000);
+
 }
+
+window.onload = countdown;
+
 </script>
 
 </head>
 
-<body style="text-align:center;font-family:Arial;margin-top:100px;">
+<body>
 
 <h2>🔒 Link Locked</h2>
-<p>Click the button and wait 5 seconds</p>
 
-<button onclick="openAd()" style="padding:15px 30px;font-size:18px;">
-Unlock Link
+<div id="timer" class="timer">
+Please wait 5 seconds
+</div>
+
+<button id="unlockBtn" class="unlock-btn" onclick="openAd()" disabled>
+🚀 Unlock Link
 </button>
 
 </body>
