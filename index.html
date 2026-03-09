@@ -9,9 +9,7 @@
 
 <style>
 
-*{
-box-sizing:border-box;
-}
+*{box-sizing:border-box;}
 
 body{
 margin:0;
@@ -23,8 +21,6 @@ font-family:Arial, sans-serif;
 color:#fff;
 overflow:hidden;
 text-align:center;
-
-/* พื้นหลัง Neutron Star */
 
 background:
 radial-gradient(circle at center,
@@ -59,8 +55,6 @@ margin-bottom:15px;
 font-size:18px;
 }
 
-/* Progress bar */
-
 #progress{
 width:100%;
 height:10px;
@@ -74,38 +68,16 @@ display:none;
 #bar{
 height:100%;
 width:0%;
-
-background:linear-gradient(
-90deg,
-#ff4b4b,
-#ff0000,
-#ff4b4b
-);
-
+background:linear-gradient(90deg,#ff4b4b,#ff0000,#ff4b4b);
 background-size:200% 100%;
-
 animation:shine 1.5s linear infinite;
-
 transition:width 0.1s linear;
-
-box-shadow:
-0 0 10px rgba(255,0,0,0.8),
-0 0 20px rgba(255,0,0,0.5);
 }
 
 @keyframes shine{
-
-0%{
-background-position:200% 0;
+0%{background-position:200% 0;}
+100%{background-position:-200% 0;}
 }
-
-100%{
-background-position:-200% 0;
-}
-
-}
-
-/* ปุ่ม */
 
 button{
 width:100%;
@@ -116,20 +88,7 @@ border-radius:12px;
 background:linear-gradient(#ff4b4b,#ff0000);
 color:white;
 cursor:pointer;
-box-shadow:0 10px 25px rgba(0,0,0,0.6);
-transition:all 0.2s ease;
 }
-
-button:hover{
-transform:translateY(-3px);
-}
-
-button:active{
-transform:scale(0.96);
-box-shadow:0 4px 10px rgba(0,0,0,0.6);
-}
-
-/* ปุ่มปลายทาง */
 
 #target{
 display:none;
@@ -144,20 +103,7 @@ border-radius:10px;
 color:black;
 text-decoration:none;
 font-size:18px;
-box-shadow:0 8px 20px rgba(0,0,0,0.6);
-transition:all 0.2s ease;
 }
-
-#target a:hover{
-transform:translateY(-3px);
-}
-
-#target a:active{
-transform:scale(0.95);
-box-shadow:0 4px 10px rgba(0,0,0,0.6);
-}
-
-/* Bubble */
 
 .bubble{
 position:fixed;
@@ -167,24 +113,10 @@ animation:float 10s linear infinite;
 }
 
 @keyframes float{
-
-0%{
-transform:translateY(30vh) scale(0.5);
-opacity:0;
+0%{transform:translateY(30vh) scale(0.5);opacity:0;}
+20%{opacity:1;}
+100%{transform:translateY(-20vh) scale(1);opacity:0;}
 }
-
-20%{
-opacity:1;
-}
-
-100%{
-transform:translateY(-20vh) scale(1);
-opacity:0;
-}
-
-}
-
-/* เส้นตก */
 
 .line{
 position:fixed;
@@ -195,17 +127,9 @@ animation:fall 4s linear infinite;
 }
 
 @keyframes fall{
-0%{
-transform:translateY(-50px);
-opacity:0;
-}
-20%{
-opacity:1;
-}
-100%{
-transform:translateY(110vh);
-opacity:0;
-}
+0%{transform:translateY(-50px);opacity:0;}
+20%{opacity:1;}
+100%{transform:translateY(110vh);opacity:0;}
 }
 
 </style>
@@ -234,106 +158,115 @@ opacity:0;
 
 <script>
 
-let adOpened=false;
+let adOpened=false
+let leftPage=false
+let adStart=0
 
 function createBubble(){
-
-let b=document.createElement("div");
-b.className="bubble";
-
-let size=Math.random()*120+40;
-
-b.style.width=size+"px";
-b.style.height=size+"px";
-
-b.style.left=Math.random()*100+"%";
-
-document.body.appendChild(b);
-
-setTimeout(()=>{b.remove()},10000);
-
+let b=document.createElement("div")
+b.className="bubble"
+let size=Math.random()*120+40
+b.style.width=size+"px"
+b.style.height=size+"px"
+b.style.left=Math.random()*100+"%"
+document.body.appendChild(b)
+setTimeout(()=>b.remove(),10000)
 }
 
-setInterval(createBubble,600);
+setInterval(createBubble,600)
 
 function createLine(){
-
-let l=document.createElement("div");
-l.className="line";
-
-l.style.left=Math.random()*100+"%";
-
-document.body.appendChild(l);
-
-setTimeout(()=>{l.remove()},4000);
-
+let l=document.createElement("div")
+l.className="line"
+l.style.left=Math.random()*100+"%"
+document.body.appendChild(l)
+setTimeout(()=>l.remove(),4000)
 }
 
-setInterval(createLine,600);
+setInterval(createLine,600)
 
 function openAds(){
 
-window.open("https://omg10.com/4/10697514","_blank");
+window.open("https://omg10.com/4/10697514","_blank")
 
-adOpened=true;
+adOpened=true
+adStart=Date.now()
 
-document.getElementById("status").innerText="Return to this page...";
+document.getElementById("status").innerText="Return to this page..."
 
 }
 
 document.addEventListener("visibilitychange",function(){
 
-if(!document.hidden && adOpened){
+if(document.hidden && adOpened){
 
-startCountdown();
-
-adOpened=false;
+leftPage=true
 
 }
 
-});
+if(!document.hidden && adOpened && leftPage){
+
+let stayTime=(Date.now()-adStart)/1000
+
+if(stayTime<3){
+
+document.getElementById("status").innerText="Please stay on Ads longer"
+
+adOpened=false
+leftPage=false
+return
+
+}
+
+startCountdown()
+
+adOpened=false
+leftPage=false
+
+}
+
+})
 
 function startCountdown(){
 
-let duration=5000;
-let start=Date.now();
+let duration=5000
+let start=Date.now()
 
-let status=document.getElementById("status");
-let progress=document.getElementById("progress");
-let bar=document.getElementById("bar");
+let status=document.getElementById("status")
+let progress=document.getElementById("progress")
+let bar=document.getElementById("bar")
 
-progress.style.display="block";
+progress.style.display="block"
 
 function update(){
 
-let now=Date.now();
-let elapsed=now-start;
+let now=Date.now()
+let elapsed=now-start
+let percent=Math.min(elapsed/duration*100,100)
 
-let percent=Math.min(elapsed/duration*100,100);
+bar.style.width=percent+"%"
 
-bar.style.width=percent+"%";
+let seconds=Math.ceil((duration-elapsed)/1000)
 
-let seconds=Math.ceil((duration-elapsed)/1000);
-
-status.innerText="Please wait "+seconds+"s";
+if(seconds>0){
+status.innerText="Please wait "+seconds+"s"
+}
 
 if(percent<100){
 
-requestAnimationFrame(update);
+requestAnimationFrame(update)
 
 }else{
 
-status.innerText="Link Ready";
-
-progress.style.display="none";
-
-document.getElementById("target").style.display="block";
+status.innerText="Link Ready"
+progress.style.display="none"
+document.getElementById("target").style.display="block"
 
 }
 
 }
 
-update();
+update()
 
 }
 
