@@ -2,43 +2,62 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Get Link</title>
 
 <style>
+
 body{
-font-family:sans-serif;
-background:#0f172a;
-display:flex;
+margin:0;
 height:100vh;
+display:flex;
 justify-content:center;
 align-items:center;
+font-family:Arial;
 color:white;
+
+background:linear-gradient(45deg,#020617,#0f172a,#1e293b);
+background-size:400%;
+animation:bg 10s infinite alternate;
+}
+
+@keyframes bg{
+0%{background-position:left}
+100%{background-position:right}
 }
 
 .card{
-background:#1e293b;
+background:rgba(255,255,255,0.05);
 padding:40px;
-border-radius:12px;
+border-radius:18px;
 text-align:center;
-width:300px;
+width:320px;
+backdrop-filter:blur(10px);
+box-shadow:0 0 30px rgba(0,0,0,0.5);
 }
 
 button{
-background:#22c55e;
-border:none;
-padding:15px;
+margin-top:20px;
 width:100%;
+padding:15px;
+border:none;
+border-radius:12px;
 font-size:16px;
-color:white;
-border-radius:8px;
 cursor:pointer;
-animation:pulse 1.5s infinite;
+color:white;
+
+background:linear-gradient(90deg,#6366f1,#3b82f6,#6366f1);
+background-size:200%;
+animation:btn 3s linear infinite;
 }
 
-@keyframes pulse{
-0%{transform:scale(1)}
-50%{transform:scale(1.05)}
-100%{transform:scale(1)}
+@keyframes btn{
+0%{background-position:0}
+100%{background-position:200%}
+}
+
+button:hover{
+transform:scale(1.05);
 }
 
 </style>
@@ -48,9 +67,11 @@ animation:pulse 1.5s infinite;
 
 <div class="card">
 
-<h2>Get Link</h2>
+<h2>Generate Link</h2>
 
-<button onclick="start()">GET LINK</button>
+<p>Click the button to unlock your link</p>
+
+<button onclick="start()">Get Link</button>
 
 </div>
 
@@ -58,9 +79,9 @@ animation:pulse 1.5s infinite;
 
 function start(){
 
-sessionStorage.setItem("step","1")
+sessionStorage.setItem("gate","1")
 
-window.location="gate.html"
+location="gate.html"
 
 }
 
