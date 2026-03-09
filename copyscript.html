@@ -9,8 +9,6 @@
 
 <style>
 
-/* CSS เดิมทั้งหมดเหมือนของคุณ */
-
 *{box-sizing:border-box;}
 
 body{
@@ -36,48 +34,97 @@ background-size:100% 100%,300% 300%;
 animation:bgmove 12s ease infinite;
 }
 
-/* floating button */
-
-.floating-toggle{
-position:fixed;
-bottom:25px;
-right:25px;
-width:55px;
-height:55px;
-border-radius:50%;
-border:none;
-font-size:24px;
-cursor:pointer;
-background:linear-gradient(#ff4b4b,#ff0000);
-color:white;
-box-shadow:0 0 15px rgba(255,0,0,0.6);
-z-index:9999;
+@keyframes bgmove{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
 }
 
-.floating-menu{
-position:fixed;
-bottom:90px;
-right:25px;
-display:flex;
-flex-direction:column;
-gap:10px;
-transition:0.3s;
+.container{
+width:90%;
+max-width:420px;
+padding:30px;
+background:rgba(0,0,0,0.55);
+border-radius:15px;
+backdrop-filter:blur(6px);
+box-shadow:0 0 25px rgba(0,0,0,0.6);
 }
 
-.floating-menu.hidden{
-opacity:0;
-pointer-events:none;
-transform:translateY(20px);
-}
-
-.float-btn{
-padding:10px 16px;
+textarea{
+width:100%;
+height:100px;
 border:none;
 border-radius:10px;
-background:white;
-color:black;
+padding:12px;
+resize:none;
+font-size:15px;
+margin-bottom:20px;
+}
+
+button{
+width:100%;
+padding:16px;
+font-size:18px;
+border:none;
+border-radius:12px;
+background:linear-gradient(90deg,#ff4b4b,#ff0000,#ff4b4b);
+background-size:200% 100%;
+color:white;
 cursor:pointer;
-font-size:14px;
+animation:shine 2s linear infinite;
+transition:0.2s;
+}
+
+button:hover{
+transform:scale(1.05);
+box-shadow:0 0 20px rgba(255,0,0,0.7);
+}
+
+@keyframes shine{
+0%{background-position:200% 0;}
+100%{background-position:-200% 0;}
+}
+
+.toast{
+position:fixed;
+top:-80px;
+left:50%;
+transform:translateX(-50%);
+background:rgba(0,0,0,0.7);
+padding:12px 20px;
+border-radius:10px;
+transition:0.4s;
+}
+
+.toast.show{
+top:30px;
+}
+
+.bubble{
+position:fixed;
+border-radius:50%;
+background:rgba(255,255,255,0.15);
+animation:float 10s linear infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(30vh) scale(0.5);opacity:0;}
+20%{opacity:1;}
+100%{transform:translateY(-20vh) scale(1);opacity:0;}
+}
+
+.line{
+position:fixed;
+width:2px;
+height:40px;
+background:rgba(255,255,255,0.4);
+animation:fall 4s linear infinite;
+}
+
+@keyframes fall{
+0%{transform:translateY(-50px);opacity:0;}
+20%{opacity:1;}
+100%{transform:translateY(110vh);opacity:0;}
 }
 
 </style>
@@ -98,23 +145,11 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/meobeo8/a/a/a"))()
 
 </div>
 
-<div id="floatMenu" class="floating-menu hidden">
-
-<button class="float-btn" onclick="window.scrollTo(0,0)">
-⬆ Top
-</button>
-
-<button class="float-btn" onclick="location.reload()">
-🔄 Refresh
-</button>
-
-</div>
-
-<button class="floating-toggle" onclick="toggleMenu()">☰</button>
+<div id="toast" class="toast">Copied</div>
 
 <script>
 
-/* token check */
+/* TOKEN CHECK */
 
 let params=new URLSearchParams(location.search)
 
@@ -129,6 +164,8 @@ location.href="index.html"
 if(Date.now()>expire){
 location.href="index.html"
 }
+
+/* COPY */
 
 function copyText(){
 
@@ -147,15 +184,63 @@ btn.style.transform="scale(1)"
 
 showToast()
 
+/* TOKEN หมดทันที */
+
 sessionStorage.removeItem("token")
 sessionStorage.removeItem("expire")
 
 }
 
-function toggleMenu(){
-let menu=document.getElementById("floatMenu")
-menu.classList.toggle("hidden")
+function showToast(){
+
+let toast=document.getElementById("toast")
+
+toast.classList.add("show")
+
+setTimeout(()=>{
+toast.classList.remove("show")
+},2000)
+
 }
+
+/* bubbles */
+
+function createBubble(){
+
+let b=document.createElement("div")
+
+b.className="bubble"
+
+let size=Math.random()*120+40
+
+b.style.width=size+"px"
+b.style.height=size+"px"
+b.style.left=Math.random()*100+"%"
+
+document.body.appendChild(b)
+
+setTimeout(()=>b.remove(),10000)
+
+}
+
+setInterval(createBubble,600)
+
+/* falling lines */
+
+function createLine(){
+
+let l=document.createElement("div")
+
+l.className="line"
+l.style.left=Math.random()*100+"%"
+
+document.body.appendChild(l)
+
+setTimeout(()=>l.remove(),4000)
+
+}
+
+setInterval(createLine,600)
 
 </script>
 
