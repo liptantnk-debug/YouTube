@@ -47,11 +47,8 @@ border-radius:10px;
 font-size:18px;
 color:white;
 cursor:pointer;
-
 background:linear-gradient(#ff3b3b,#ff0000);
-
 transition:0.2s;
-
 animation:pulse 2s infinite;
 }
 
@@ -63,15 +60,11 @@ button:active{
 transform:scale(.95);
 }
 
-/* glow pulse */
-
 @keyframes pulse{
 0%{box-shadow:0 0 10px rgba(255,0,0,0.4);}
 50%{box-shadow:0 0 25px rgba(255,0,0,0.9);}
 100%{box-shadow:0 0 10px rgba(255,0,0,0.4);}
 }
-
-/* ripple */
 
 .ripple{
 position:absolute;
@@ -87,8 +80,6 @@ transform:scale(4);
 opacity:0;
 }
 }
-
-/* copied animation */
 
 .copied{
 position:absolute;
@@ -126,13 +117,14 @@ https://example.com
 
 <script>
 
-let link="https://example.com"
-
 const btn=document.getElementById("copyBtn")
 
 btn.addEventListener("click",function(e){
 
-navigator.clipboard.writeText(link)
+/* ดึงข้อความจริงจากกล่อง */
+let text=document.getElementById("link").innerText
+
+navigator.clipboard.writeText(text)
 
 /* ripple */
 
@@ -146,7 +138,7 @@ btn.appendChild(circle)
 
 setTimeout(()=>circle.remove(),600)
 
-/* copied text */
+/* copied animation */
 
 let msg=document.createElement("div")
 msg.className="copied"
