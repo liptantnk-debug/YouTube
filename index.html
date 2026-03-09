@@ -1,3 +1,5 @@
+ไฟล์ index
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -132,50 +134,6 @@ animation:fall 4s linear infinite;
 100%{transform:translateY(110vh);opacity:0;}
 }
 
-/* Floating button */
-
-.floating-toggle{
-position:fixed;
-bottom:25px;
-right:25px;
-width:55px;
-height:55px;
-border-radius:50%;
-border:none;
-font-size:24px;
-cursor:pointer;
-background:linear-gradient(#ff4b4b,#ff0000);
-color:white;
-box-shadow:0 0 15px rgba(255,0,0,0.6);
-z-index:9999;
-}
-
-.floating-menu{
-position:fixed;
-bottom:90px;
-right:25px;
-display:flex;
-flex-direction:column;
-gap:10px;
-transition:0.3s;
-}
-
-.floating-menu.hidden{
-opacity:0;
-pointer-events:none;
-transform:translateY(20px);
-}
-
-.float-btn{
-padding:10px 16px;
-border:none;
-border-radius:10px;
-background:white;
-color:black;
-cursor:pointer;
-font-size:14px;
-}
-
 </style>
 
 </head>
@@ -193,26 +151,12 @@ font-size:14px;
 <button onclick="openAds()">🚀 Get Link</button>
 
 <div id="target">
-<a href="#" onclick="goToCopy()" target="_blank">
+<a href="copyscript.html" target="_blank" rel="noopener noreferrer">
 ➡ Go To Website
 </a>
 </div>
 
 </div>
-
-<div id="floatMenu" class="floating-menu hidden">
-
-<button class="float-btn" onclick="window.scrollTo(0,0)">
-⬆ Top
-</button>
-
-<button class="float-btn" onclick="location.reload()">
-🔄 Refresh
-</button>
-
-</div>
-
-<button class="floating-toggle" onclick="toggleMenu()">☰</button>
 
 <script>
 
@@ -257,7 +201,9 @@ document.getElementById("status").innerText="Return to this page..."
 document.addEventListener("visibilitychange",function(){
 
 if(document.hidden && adOpened){
+
 leftPage=true
+
 }
 
 if(!document.hidden && adOpened && leftPage){
@@ -265,10 +211,13 @@ if(!document.hidden && adOpened && leftPage){
 let stayTime=(Date.now()-adStart)/1000
 
 if(stayTime<3){
+
 document.getElementById("status").innerText="Please stay on Ads longer"
+
 adOpened=false
 leftPage=false
 return
+
 }
 
 startCountdown()
@@ -321,28 +270,6 @@ document.getElementById("target").style.display="block"
 
 update()
 
-}
-
-/* token */
-
-function goToCopy(){
-
-let token=Math.random().toString(36).substring(2)
-
-let expire=Date.now()+30000
-
-sessionStorage.setItem("token",token)
-sessionStorage.setItem("expire",expire)
-
-window.open("copyscript.html?token="+token,"_blank")
-
-}
-
-/* floating menu */
-
-function toggleMenu(){
-let menu=document.getElementById("floatMenu")
-menu.classList.toggle("hidden")
 }
 
 </script>
