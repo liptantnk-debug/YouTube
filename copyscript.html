@@ -61,23 +61,34 @@ font-size:15px;
 margin-bottom:20px;
 }
 
-button{
+/* BUTTON STYLE (เหมือนหน้าแรก) */
+
+.btn{
+display:block;
 width:100%;
 padding:16px;
 font-size:18px;
 border:none;
 border-radius:12px;
+
 background:linear-gradient(90deg,#ff4b4b,#ff0000,#ff4b4b);
 background-size:200% 100%;
+
 color:white;
 cursor:pointer;
+text-decoration:none;
+
 animation:shine 2s linear infinite;
-transition:0.2s;
+transition:0.25s;
 }
 
-button:hover{
-transform:scale(1.05);
-box-shadow:0 0 20px rgba(255,0,0,0.7);
+.btn:hover{
+transform:scale(1.06);
+box-shadow:0 0 25px rgba(255,0,0,0.7);
+}
+
+.btn:active{
+transform:scale(0.95);
 }
 
 @keyframes shine{
@@ -141,7 +152,7 @@ animation:fall 4s linear infinite;
 loadstring(game:HttpGet("https://raw.githubusercontent.com/meobeo8/a/a/a"))()
 </textarea>
 
-<button id="copyBtn" onclick="copyText()">📄 Copy Text</button>
+<button class="btn" id="copyBtn" onclick="copyText()">📄 Copy Text</button>
 
 </div>
 
@@ -184,8 +195,6 @@ btn.style.transform="scale(1)"
 
 showToast()
 
-/* TOKEN หมดทันที */
-
 sessionStorage.removeItem("token")
 sessionStorage.removeItem("expire")
 
@@ -208,7 +217,6 @@ toast.classList.remove("show")
 function createBubble(){
 
 let b=document.createElement("div")
-
 b.className="bubble"
 
 let size=Math.random()*120+40
