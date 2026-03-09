@@ -149,7 +149,7 @@ animation:fall 4s linear infinite;
 <button onclick="openAds()">🚀 Get Link</button>
 
 <div id="target">
-<a href="copyscript.html" target="_blank" rel="noopener noreferrer">
+<a href="#" onclick="goToCopy()" target="_blank">
 ➡ Go To Website
 </a>
 </div>
@@ -267,6 +267,21 @@ document.getElementById("target").style.display="block"
 }
 
 update()
+
+}
+
+/* TOKEN SYSTEM */
+
+function goToCopy(){
+
+let token=Math.random().toString(36).substring(2)
+
+let expire=Date.now()+30000
+
+sessionStorage.setItem("token",token)
+sessionStorage.setItem("expire",expire)
+
+window.open("copyscript.html?token="+token,"_blank")
 
 }
 
