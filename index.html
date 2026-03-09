@@ -74,8 +74,6 @@ animation:shine 1.5s linear infinite;
 transition:width 0.1s linear;
 }
 
-/* BUTTON STYLE */
-
 .btn{
 display:block;
 width:100%;
@@ -142,6 +140,7 @@ animation:fall 4s linear infinite;
 }
 
 </style>
+
 </head>
 
 <body>
@@ -157,11 +156,9 @@ animation:fall 4s linear infinite;
 <button class="btn" onclick="openAds()">🚀 Get Link</button>
 
 <div id="target">
-
 <a class="btn" href="#" onclick="goToCopy()" target="_blank">
 ➡ Go To Website
 </a>
-
 </div>
 
 </div>
@@ -182,6 +179,7 @@ b.style.left=Math.random()*100+"%"
 document.body.appendChild(b)
 setTimeout(()=>b.remove(),10000)
 }
+
 setInterval(createBubble,600)
 
 function createLine(){
@@ -191,6 +189,7 @@ l.style.left=Math.random()*100+"%"
 document.body.appendChild(l)
 setTimeout(()=>l.remove(),4000)
 }
+
 setInterval(createLine,600)
 
 function openAds(){
@@ -221,12 +220,14 @@ document.getElementById("status").innerText="Please stay on Ads longer"
 adOpened=false
 leftPage=false
 return
+
 }
 
 startCountdown()
 
 adOpened=false
 leftPage=false
+
 }
 
 })
@@ -280,8 +281,8 @@ let token=Math.random().toString(36).substring(2)
 
 let expire=Date.now()+30000
 
-sessionStorage.setItem("token",token)
-sessionStorage.setItem("expire",expire)
+localStorage.setItem("token",token)
+localStorage.setItem("expire",expire)
 
 window.open("copyscript.html?token="+token,"_blank")
 
