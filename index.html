@@ -79,15 +79,43 @@ transition:width 0.1s linear;
 100%{background-position:-200% 0;}
 }
 
+/* ปุ่ม */
+
 button{
 width:100%;
 padding:16px;
 font-size:18px;
 border:none;
 border-radius:12px;
-background:linear-gradient(#ff4b4b,#ff0000);
+background:linear-gradient(90deg,#ff4b4b,#ff0000,#ff4b4b);
+background-size:200% 100%;
 color:white;
 cursor:pointer;
+transition:all 0.25s ease;
+}
+
+/* เอฟเฟกต์ตอนเอาเมาส์ชี้ */
+
+button:hover{
+
+transform:translateY(-4px) scale(1.05);
+
+box-shadow:
+0 10px 25px rgba(255,0,0,0.6),
+0 0 15px rgba(255,0,0,0.7);
+
+background-position:100% 0;
+
+}
+
+/* ตอนกดปุ่ม */
+
+button:active{
+
+transform:scale(0.96);
+
+box-shadow:0 0 10px rgba(255,0,0,0.6);
+
 }
 
 #target{
@@ -149,7 +177,7 @@ animation:fall 4s linear infinite;
 <button onclick="openAds()">🚀 Get Link</button>
 
 <div id="target">
-<a href="#" onclick="goToCopy()" target="_blank">
+<a href="copyscript.html" target="_blank" rel="noopener noreferrer">
 ➡ Go To Website
 </a>
 </div>
@@ -187,7 +215,7 @@ setInterval(createLine,600)
 
 function openAds(){
 
-window.open("https://omg10.com/4/10700946","_blank")
+window.open("https://omg10.com/4/10697514","_blank")
 
 adOpened=true
 adStart=Date.now()
@@ -267,21 +295,6 @@ document.getElementById("target").style.display="block"
 }
 
 update()
-
-}
-
-/* TOKEN SYSTEM */
-
-function goToCopy(){
-
-let token=Math.random().toString(36).substring(2)
-
-let expire=Date.now()+30000
-
-sessionStorage.setItem("token",token)
-sessionStorage.setItem("expire",expire)
-
-window.open("copyscript.html?token="+token,"_blank")
 
 }
 
