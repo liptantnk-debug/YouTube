@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Unlock Link</title>
+
+<style>
+
+body{
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+font-family:Arial;
+background:#020617;
+color:white;
+}
+
+.card{
+background:rgba(255,255,255,0.05);
+padding:40px;
+border-radius:18px;
+width:320px;
+text-align:center;
+backdrop-filter:blur(10px);
+}
+
+input{
+width:100%;
+padding:10px;
+border:none;
+border-radius:8px;
+margin-top:10px;
+}
+
+button{
+margin-top:15px;
+width:100%;
+padding:14px;
+border:none;
+border-radius:10px;
+font-size:15px;
+cursor:pointer;
+color:white;
+background:#3b82f6;
+}
+
+button:disabled{
+opacity:.5;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h2>Link Ready</h2>
+
+<p id="count">Wait 8s</p>
+
+<input id="link" value="https://yourwebsite.com" readonly>
+
+<button onclick="copy()">Copy Link</button>
+
+<button id="go" disabled onclick="go()">Go To Website</button>
+
+</div>
+
+<script>
+
+if(sessionStorage.getItem("gate")!="2"){
+location="index.html"
+}
+
+let t=8
+
+let timer=setInterval(()=>{
+
+t--
+
+document.getElementById("count").innerText="Wait "+t+"s"
+
+if(t<=0){
+
+clearInterval(timer)
+
+document.getElementById("count").innerText="Unlocked"
+
+document.getElementById("go").disabled=false
+
+}
+
+},1000)
+
+function copy(){
+
+let link=document.getElementById("link")
+
+link.select()
+
+navigator.clipboard.writeText(link.value)
+
+alert("Link copied")
+
+}
+
+function go(){
+
+sessionStorage.clear()
+
+location="https://yourwebsite.com"
+
+}
+
+</script>
+
+</body>
+</html>
