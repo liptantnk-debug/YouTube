@@ -100,33 +100,6 @@ transition:0.4s;
 top:30px;
 }
 
-.bubble{
-position:fixed;
-border-radius:50%;
-background:rgba(255,255,255,0.15);
-animation:float 10s linear infinite;
-}
-
-@keyframes float{
-0%{transform:translateY(30vh) scale(0.5);opacity:0;}
-20%{opacity:1;}
-100%{transform:translateY(-20vh) scale(1);opacity:0;}
-}
-
-.line{
-position:fixed;
-width:2px;
-height:40px;
-background:rgba(255,255,255,0.4);
-animation:fall 4s linear infinite;
-}
-
-@keyframes fall{
-0%{transform:translateY(-50px);opacity:0;}
-20%{opacity:1;}
-100%{transform:translateY(110vh);opacity:0;}
-}
-
 </style>
 
 </head>
@@ -149,13 +122,11 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/meobeo8/a/a/a"))()
 
 <script>
 
-/* TOKEN CHECK */
-
 let params=new URLSearchParams(location.search)
 
 let token=params.get("token")
-let savedToken=sessionStorage.getItem("token")
-let expire=sessionStorage.getItem("expire")
+let savedToken=localStorage.getItem("token")
+let expire=localStorage.getItem("expire")
 
 if(!token || token!==savedToken){
 location.href="index.html"
@@ -165,8 +136,6 @@ if(Date.now()>expire){
 location.href="index.html"
 }
 
-/* COPY */
-
 function copyText(){
 
 let textarea=document.getElementById("text")
@@ -175,19 +144,15 @@ let btn=document.getElementById("copyBtn")
 navigator.clipboard.writeText(textarea.value)
 
 btn.innerText="✔ Copied"
-btn.style.transform="scale(0.95)"
 
 setTimeout(()=>{
 btn.innerText="📄 Copy Text"
-btn.style.transform="scale(1)"
 },1500)
 
 showToast()
 
-/* TOKEN หมดทันที */
-
-sessionStorage.removeItem("token")
-sessionStorage.removeItem("expire")
+localStorage.removeItem("token")
+localStorage.removeItem("expire")
 
 }
 
@@ -202,45 +167,6 @@ toast.classList.remove("show")
 },2000)
 
 }
-
-/* bubbles */
-
-function createBubble(){
-
-let b=document.createElement("div")
-
-b.className="bubble"
-
-let size=Math.random()*120+40
-
-b.style.width=size+"px"
-b.style.height=size+"px"
-b.style.left=Math.random()*100+"%"
-
-document.body.appendChild(b)
-
-setTimeout(()=>b.remove(),10000)
-
-}
-
-setInterval(createBubble,600)
-
-/* falling lines */
-
-function createLine(){
-
-let l=document.createElement("div")
-
-l.className="line"
-l.style.left=Math.random()*100+"%"
-
-document.body.appendChild(l)
-
-setTimeout(()=>l.remove(),4000)
-
-}
-
-setInterval(createLine,600)
 
 </script>
 
