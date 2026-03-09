@@ -79,8 +79,6 @@ transition:width 0.1s linear;
 100%{background-position:-200% 0;}
 }
 
-/* ปุ่ม */
-
 button{
 width:100%;
 padding:16px;
@@ -94,43 +92,20 @@ cursor:pointer;
 transition:all 0.25s ease;
 }
 
-/* เอฟเฟกต์ตอนเอาเมาส์ชี้ */
-
 button:hover{
-
 transform:translateY(-4px) scale(1.05);
-
 box-shadow:
 0 10px 25px rgba(255,0,0,0.6),
 0 0 15px rgba(255,0,0,0.7);
-
-background-position:100% 0;
-
 }
 
-/* ตอนกดปุ่ม */
-
 button:active{
-
 transform:scale(0.96);
-
-box-shadow:0 0 10px rgba(255,0,0,0.6);
-
 }
 
 #target{
 display:none;
 margin-top:20px;
-}
-
-#target a{
-display:block;
-padding:14px;
-background:white;
-border-radius:10px;
-color:black;
-text-decoration:none;
-font-size:18px;
 }
 
 .bubble{
@@ -177,9 +152,7 @@ animation:fall 4s linear infinite;
 <button onclick="openAds()">🚀 Get Link</button>
 
 <div id="target">
-<a href="copyscript.html" target="_blank" rel="noopener noreferrer">
-➡ Go To Website
-</a>
+<button onclick="goTarget()">➡ Go To Website</button>
 </div>
 
 </div>
@@ -227,9 +200,7 @@ document.getElementById("status").innerText="Return to this page..."
 document.addEventListener("visibilitychange",function(){
 
 if(document.hidden && adOpened){
-
 leftPage=true
-
 }
 
 if(!document.hidden && adOpened && leftPage){
@@ -295,6 +266,12 @@ document.getElementById("target").style.display="block"
 }
 
 update()
+
+}
+
+function goTarget(){
+
+window.location.href="copyscript.html"
 
 }
 
