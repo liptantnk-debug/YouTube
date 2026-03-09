@@ -17,9 +17,10 @@ min-height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-font-family:Arial;
+font-family:Arial, sans-serif;
 color:#fff;
 overflow:hidden;
+text-align:center;
 
 background:
 radial-gradient(circle at center,
@@ -47,7 +48,6 @@ background:rgba(0,0,0,0.55);
 border-radius:15px;
 backdrop-filter:blur(6px);
 box-shadow:0 0 25px rgba(0,0,0,0.6);
-text-align:center;
 }
 
 #status{
@@ -71,11 +71,12 @@ width:0%;
 background:linear-gradient(90deg,#ff4b4b,#ff0000,#ff4b4b);
 background-size:200% 100%;
 animation:shine 1.5s linear infinite;
+transition:width 0.1s linear;
 }
 
 @keyframes shine{
-0%{background-position:200%}
-100%{background-position:-200%}
+0%{background-position:200% 0;}
+100%{background-position:-200% 0;}
 }
 
 button{
@@ -84,19 +85,9 @@ padding:16px;
 font-size:18px;
 border:none;
 border-radius:12px;
-background:linear-gradient(90deg,#ff4b4b,#ff0000,#ff4b4b);
+background:linear-gradient(#ff4b4b,#ff0000);
 color:white;
 cursor:pointer;
-transition:all .25s;
-}
-
-button:hover{
-transform:translateY(-4px) scale(1.05);
-box-shadow:0 10px 25px rgba(255,0,0,.6);
-}
-
-button:active{
-transform:scale(.95);
 }
 
 #target{
@@ -104,7 +95,45 @@ display:none;
 margin-top:20px;
 }
 
+#target a{
+display:block;
+padding:14px;
+background:white;
+border-radius:10px;
+color:black;
+text-decoration:none;
+font-size:18px;
+}
+
+.bubble{
+position:fixed;
+border-radius:50%;
+background:rgba(255,255,255,0.15);
+animation:float 10s linear infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(30vh) scale(0.5);opacity:0;}
+20%{opacity:1;}
+100%{transform:translateY(-20vh) scale(1);opacity:0;}
+}
+
+.line{
+position:fixed;
+width:2px;
+height:40px;
+background:rgba(255,255,255,0.4);
+animation:fall 4s linear infinite;
+}
+
+@keyframes fall{
+0%{transform:translateY(-50px);opacity:0;}
+20%{opacity:1;}
+100%{transform:translateY(110vh);opacity:0;}
+}
+
 </style>
+
 </head>
 
 <body>
@@ -120,7 +149,9 @@ margin-top:20px;
 <button onclick="openAds()">🚀 Get Link</button>
 
 <div id="target">
-<button onclick="goTarget()">➡ Go To Website</button>
+<a href="#" onclick="goToCopy()" target="_blank">
+➡ Go To Website
+</a>
 </div>
 
 </div>
@@ -131,9 +162,32 @@ let adOpened=false
 let leftPage=false
 let adStart=0
 
+function createBubble(){
+let b=document.createElement("div")
+b.className="bubble"
+let size=Math.random()*120+40
+b.style.width=size+"px"
+b.style.height=size+"px"
+b.style.left=Math.random()*100+"%"
+document.body.appendChild(b)
+setTimeout(()=>b.remove(),10000)
+}
+
+setInterval(createBubble,600)
+
+function createLine(){
+let l=document.createElement("div")
+l.className="line"
+l.style.left=Math.random()*100+"%"
+document.body.appendChild(l)
+setTimeout(()=>l.remove(),4000)
+}
+
+setInterval(createLine,600)
+
 function openAds(){
 
-window.open("https://omg10.com/4/10697514","_blank")
+window.open("https://omg10.com/4/10700946","_blank")
 
 adOpened=true
 adStart=Date.now()
@@ -145,7 +199,9 @@ document.getElementById("status").innerText="Return to this page..."
 document.addEventListener("visibilitychange",function(){
 
 if(document.hidden && adOpened){
+
 leftPage=true
+
 }
 
 if(!document.hidden && adOpened && leftPage){
@@ -176,9 +232,9 @@ function startCountdown(){
 let duration=5000
 let start=Date.now()
 
-let bar=document.getElementById("bar")
-let progress=document.getElementById("progress")
 let status=document.getElementById("status")
+let progress=document.getElementById("progress")
+let bar=document.getElementById("bar")
 
 progress.style.display="block"
 
@@ -214,9 +270,18 @@ update()
 
 }
 
-function goTarget(){
+/* TOKEN SYSTEM */
 
-window.location.href="copy.html"
+function goToCopy(){
+
+let token=Math.random().toString(36).substring(2)
+
+let expire=Date.now()+30000
+
+sessionStorage.setItem("token",token)
+sessionStorage.setItem("expire",expire)
+
+window.open("copyscript.html?token="+token,"_blank")
 
 }
 
