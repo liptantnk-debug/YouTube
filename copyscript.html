@@ -1,63 +1,53 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Copy Text</title>
+<title>Copy Script</title>
 
 <style>
 
-*{box-sizing:border-box;}
-
 body{
 margin:0;
-min-height:100vh;
+font-family:Arial;
+background:#0f0f0f;
+color:white;
 display:flex;
 justify-content:center;
 align-items:center;
-font-family:Arial,sans-serif;
-color:#fff;
-overflow:hidden;
-text-align:center;
-
-background:
-radial-gradient(circle at center,
-rgba(255,255,255,0.35) 0%,
-rgba(220,220,220,0.25) 25%,
-rgba(0,0,0,0.65) 70%,
-rgba(0,0,0,0.9) 100%),
-linear-gradient(120deg,#0f0f0f,#5a5a5a,#cfcfcf,#5a5a5a,#0f0f0f);
-
-background-size:100% 100%,300% 300%;
-animation:bgmove 12s ease infinite;
+height:100vh;
 }
 
-.container{
-width:90%;
-max-width:420px;
+.box{
+background:#1b1b1b;
 padding:30px;
-background:rgba(0,0,0,0.55);
 border-radius:15px;
+width:320px;
+text-align:center;
+box-shadow:0 0 20px rgba(0,0,0,0.6);
 }
 
 textarea{
 width:100%;
-height:100px;
+height:120px;
+margin-top:15px;
+background:#111;
 border:none;
+color:#00ff9d;
+padding:10px;
 border-radius:10px;
-padding:12px;
 resize:none;
-margin-bottom:20px;
+font-size:14px;
 }
 
 .btn{
+display:block;
 width:100%;
 padding:16px;
 font-size:18px;
 border:none;
 border-radius:12px;
+margin-top:15px;
 
 background:linear-gradient(90deg,#ff4b4b,#ff0000,#ff4b4b);
 background-size:200% 100%;
@@ -66,6 +56,16 @@ color:white;
 cursor:pointer;
 
 animation:shine 2s linear infinite;
+transition:0.25s;
+}
+
+.btn:hover{
+transform:scale(1.06);
+box-shadow:0 0 25px rgba(255,0,0,0.7);
+}
+
+.btn:active{
+transform:scale(0.95);
 }
 
 @keyframes shine{
@@ -73,91 +73,54 @@ animation:shine 2s linear infinite;
 100%{background-position:-200% 0;}
 }
 
-.toast{
-position:fixed;
-top:-80px;
-left:50%;
-transform:translateX(-50%);
-background:rgba(0,0,0,0.7);
-padding:12px 20px;
-border-radius:10px;
-transition:0.4s;
-}
-
-.toast.show{
-top:30px;
-}
-
 </style>
-
 </head>
 
 <body>
 
-<div class="container">
+<div class="box">
 
-<h2>Your Text</h2>
+<h2>Copy Script</h2>
 
-<textarea id="text" readonly>
-loadstring(game:HttpGet("https://raw.githubusercontent.com/meobeo8/a/a/a"))()
+<textarea id="script" readonly>
+loadstring(game:HttpGet("https://example.com/script.lua"))()
 </textarea>
 
-<button class="btn" id="copyBtn" onclick="copyText()">📄 Copy Text</button>
+<button class="btn" onclick="copyText()">Copy Script</button>
+
+<button class="btn" onclick="gotoSite()">Go To Website</button>
 
 </div>
 
-<div id="toast" class="toast">Copied</div>
-
 <script>
 
-/* TOKEN CHECK */
+// กันเปิดตรง
+let token = localStorage.getItem("token")
+let expire = localStorage.getItem("expire")
 
-let params=new URLSearchParams(location.search)
-
-let token=params.get("token")
-
-let savedToken=localStorage.getItem("token")
-let expire=localStorage.getItem("expire")
-
-if(!token || token!==savedToken){
-location.href="index.html"
+if(!token || Date.now() > expire){
+alert("Invalid access")
+window.location.href="index.html"
 }
 
-if(Date.now()>expire){
-location.href="index.html"
-}
-
-/* COPY */
-
+// copy function
 function copyText(){
 
-let textarea=document.getElementById("text")
-let btn=document.getElementById("copyBtn")
+let text = document.getElementById("script")
 
-navigator.clipboard.writeText(textarea.value)
+text.select()
+text.setSelectionRange(0,99999)
 
-btn.innerText="✔ Copied"
+navigator.clipboard.writeText(text.value)
 
-setTimeout(()=>{
-btn.innerText="📄 Copy Text"
-},1500)
-
-showToast()
-
-localStorage.removeItem("token")
-localStorage.removeItem("expire")
+alert("Script copied!")
 
 }
 
-function showToast(){
+// goto site
+function gotoSite(){
 
-let toast=document.getElementById("toast")
-
-toast.classList.add("show")
-
-setTimeout(()=>{
-toast.classList.remove("show")
-},2000)
+window.location.href="https://google.com"
 
 }
 
