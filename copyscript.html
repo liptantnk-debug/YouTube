@@ -22,8 +22,6 @@ color:#fff;
 overflow:hidden;
 text-align:center;
 
-/* พื้นหลังเดียวกับโค้ดหลัก */
-
 background:
 radial-gradient(circle at center,
 rgba(255,255,255,0.35) 0%,
@@ -41,8 +39,6 @@ animation:bgmove 12s ease infinite;
 50%{background-position:100% 50%;}
 100%{background-position:0% 50%;}
 }
-
-/* card */
 
 .container{
 width:90%;
@@ -65,15 +61,33 @@ font-size:15px;
 margin-bottom:20px;
 }
 
+/* ปุ่ม */
+
 button{
 width:100%;
 padding:16px;
 font-size:18px;
 border:none;
 border-radius:12px;
-background:linear-gradient(#ff4b4b,#ff0000);
+
+background:linear-gradient(90deg,#ff4b4b,#ff0000,#ff4b4b);
+background-size:200% 100%;
+
 color:white;
 cursor:pointer;
+
+animation:shine 2s linear infinite;
+transition:0.2s;
+}
+
+button:hover{
+transform:scale(1.05);
+box-shadow:0 0 20px rgba(255,0,0,0.7);
+}
+
+@keyframes shine{
+0%{background-position:200% 0;}
+100%{background-position:-200% 0;}
 }
 
 /* toast */
@@ -134,9 +148,11 @@ animation:fall 4s linear infinite;
 
 <h2>Your Text</h2>
 
-<textarea id="text">ใส่ข้อความอะไรก็ได้</textarea>
+<textarea id="text" readonly>
+ใส่ข้อความที่ต้องการให้คัดลอก
+</textarea>
 
-<button onclick="copyText()">📄 Copy Text</button>
+<button id="copyBtn" onclick="copyText()">📄 Copy Text</button>
 
 </div>
 
@@ -144,17 +160,24 @@ animation:fall 4s linear infinite;
 
 <script>
 
-/* copy text */
+/* copy */
 
 function copyText(){
 
-let text=document.getElementById("text").value
+let textarea=document.getElementById("text")
+let btn=document.getElementById("copyBtn")
 
-navigator.clipboard.writeText(text).then(()=>{
+navigator.clipboard.writeText(textarea.value)
+
+btn.innerText="✔ Copied"
+btn.style.transform="scale(0.95)"
+
+setTimeout(()=>{
+btn.innerText="📄 Copy Text"
+btn.style.transform="scale(1)"
+},1500)
 
 showToast()
-
-})
 
 }
 
@@ -165,9 +188,7 @@ let toast=document.getElementById("toast")
 toast.classList.add("show")
 
 setTimeout(()=>{
-
 toast.classList.remove("show")
-
 },2000)
 
 }
