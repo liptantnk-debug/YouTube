@@ -61,21 +61,16 @@ font-size:15px;
 margin-bottom:20px;
 }
 
-/* ปุ่ม */
-
 button{
 width:100%;
 padding:16px;
 font-size:18px;
 border:none;
 border-radius:12px;
-
 background:linear-gradient(90deg,#ff4b4b,#ff0000,#ff4b4b);
 background-size:200% 100%;
-
 color:white;
 cursor:pointer;
-
 animation:shine 2s linear infinite;
 transition:0.2s;
 }
@@ -89,8 +84,6 @@ box-shadow:0 0 20px rgba(255,0,0,0.7);
 0%{background-position:200% 0;}
 100%{background-position:-200% 0;}
 }
-
-/* toast */
 
 .toast{
 position:fixed;
@@ -107,8 +100,6 @@ transition:0.4s;
 top:30px;
 }
 
-/* bubbles */
-
 .bubble{
 position:fixed;
 border-radius:50%;
@@ -121,8 +112,6 @@ animation:float 10s linear infinite;
 20%{opacity:1;}
 100%{transform:translateY(-20vh) scale(1);opacity:0;}
 }
-
-/* falling lines */
 
 .line{
 position:fixed;
@@ -160,7 +149,23 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/meobeo8/a/a/a"))()
 
 <script>
 
-/* copy */
+/* TOKEN CHECK */
+
+let params=new URLSearchParams(location.search)
+
+let token=params.get("token")
+let savedToken=sessionStorage.getItem("token")
+let expire=sessionStorage.getItem("expire")
+
+if(!token || token!==savedToken){
+location.href="index.html"
+}
+
+if(Date.now()>expire){
+location.href="index.html"
+}
+
+/* COPY */
 
 function copyText(){
 
@@ -178,6 +183,11 @@ btn.style.transform="scale(1)"
 },1500)
 
 showToast()
+
+/* TOKEN หมดทันที */
+
+sessionStorage.removeItem("token")
+sessionStorage.removeItem("expire")
 
 }
 
@@ -205,7 +215,6 @@ let size=Math.random()*120+40
 
 b.style.width=size+"px"
 b.style.height=size+"px"
-
 b.style.left=Math.random()*100+"%"
 
 document.body.appendChild(b)
@@ -223,7 +232,6 @@ function createLine(){
 let l=document.createElement("div")
 
 l.className="line"
-
 l.style.left=Math.random()*100+"%"
 
 document.body.appendChild(l)
