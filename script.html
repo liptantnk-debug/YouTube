@@ -104,13 +104,8 @@ transform:scale(1.05);
 box-shadow:0 0 20px rgba(255,0,0,0.7);
 }
 
-.page{
-display:none;
-}
-
-.page.active{
-display:block;
-}
+.page{display:none;}
+.page.active{display:block;}
 
 textarea{
 width:100%;
@@ -134,9 +129,7 @@ border-radius:10px;
 transition:0.4s;
 }
 
-.toast.show{
-top:30px;
-}
+.toast.show{top:30px;}
 
 .bubble{
 position:fixed;
@@ -170,7 +163,7 @@ src="https://img.youtube.com/vi/FCfEYlq-RRg/maxresdefault.jpg">
 <div id="bar"></div>
 </div>
 
-<button id="getBtn" onclick="openAds()">🚀 Get Link</button>
+<button id="getBtn">🚀 Get Link</button>
 
 </div>
 
@@ -179,7 +172,7 @@ src="https://img.youtube.com/vi/FCfEYlq-RRg/maxresdefault.jpg">
 <h2>Your Script</h2>
 
 <textarea id="text" readonly>
-loadstring(game:HttpGet("โตดาาา
+loadstring(game:HttpGet("https://example.com/script.lua"))()
 </textarea>
 
 <button onclick="copyText()">📄 Copy script</button>
@@ -192,18 +185,10 @@ loadstring(game:HttpGet("โตดาาา
 
 <script>
 
-/* ANTI BYPASS */
-
-if(sessionStorage.getItem("accessed")=="true"){
-}else{
-sessionStorage.setItem("accessed","false")
-}
-
 let adOpened=false
 let leftPage=false
 let adStart=0
-let countdownStarted=false
-let mustLeave=false
+let checking=false
 
 const ads=[
 "https://omg10.com/4/10700946",
@@ -212,6 +197,8 @@ const ads=[
 "https://omg10.com/4/10703026",
 "https://omg10.com/4/10703028"
 ]
+
+document.getElementById("getBtn").onclick=openAds
 
 function openAds(){
 
@@ -226,45 +213,42 @@ const randomAd=ads[Math.floor(Math.random()*ads.length)]
 window.open(randomAd,"_blank")
 
 adOpened=true
-mustLeave=true
+leftPage=false
+checking=true
 adStart=Date.now()
 
 document.getElementById("status").innerText="Return to this page..."
 
 }
 
-document.addEventListener("visibilitychange",function(){
-
+document.addEventListener("visibilitychange",()=>{
 if(document.hidden && adOpened){
 leftPage=true
 }
-
-if(!document.hidden){
-checkReturn()
-}
-
 })
+
+window.addEventListener("focus",checkReturn)
+window.addEventListener("pageshow",checkReturn)
 
 function checkReturn(){
 
-if(sessionStorage.getItem("accessed")!="true"){
-location.reload()
-return
-}
+if(!checking) return
 
-if(adOpened && leftPage && mustLeave && !countdownStarted){
+if(adOpened && leftPage){
+
+checking=false
 
 let stayTime=(Date.now()-adStart)/1000
 
-if(stayTime<3){
+if(stayTime<2){
 
 document.getElementById("status").innerText="Please stay on Ads longer"
 
 adOpened=false
 leftPage=false
 document.getElementById("getBtn").disabled=false
-return
 
+return
 }
 
 startCountdown()
@@ -277,8 +261,6 @@ leftPage=false
 }
 
 function startCountdown(){
-
-countdownStarted=true
 
 let duration=5000
 let start=Date.now()
