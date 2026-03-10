@@ -118,10 +118,20 @@ box-shadow:0 0 20px rgba(255,0,0,0.7);
 display:none;
 }
 
+/* completed button */
+
 .completed{
 background:linear-gradient(90deg,#00c853,#00e676,#00c853);
-box-shadow:0 0 20px rgba(0,255,120,0.8);
+box-shadow:0 0 20px rgba(0,255,120,0.6);
 animation:none;
+cursor:default;
+}
+
+/* ป้องกัน hover เปลี่ยนสี */
+
+.completed:hover{
+transform:none;
+box-shadow:0 0 20px rgba(0,255,120,0.6);
 }
 
 .page{
@@ -186,7 +196,7 @@ src="https://img.youtube.com/vi/VIDEO_ID/maxresdefault.jpg">
 
 <button id="subBtn" class="yt-btn" onclick="subscribe()">❤️ Subscribe Channel</button>
 
-<button id="likeBtn" class="yt-btn" onclick="likeVideo()">💬 Like & Comment</button>
+<button id="likeBtn" class="yt-btn" onclick="likeVideo()" disabled>💬 Like & Comment</button>
 
 <div id="status">Complete steps to unlock Get Link</div>
 <div id="actions">0 / 2 Action Completed</div>
@@ -219,8 +229,8 @@ loadstring(game:HttpGet("https://raw.githubusercontent
 
 let subscribed=false
 let liked=false
-
 let actionCount=0
+
 let actionStart=0
 let waitingAction=null
 
@@ -237,6 +247,7 @@ actionStart=Date.now()
 
 function likeVideo(){
 
+if(!subscribed) return
 if(liked) return
 
 window.open("VIDEO_LINK","_blank")
@@ -262,6 +273,8 @@ actionCount++
 document.getElementById("subBtn").innerText="✔ Completed"
 document.getElementById("subBtn").classList.add("completed")
 
+document.getElementById("likeBtn").disabled=false
+
 }
 
 if(waitingAction==="like"){
@@ -286,9 +299,7 @@ waitingAction=null
 })
 
 function updateActions(){
-
 document.getElementById("actions").innerText=actionCount+" / 2 Action Completed"
-
 }
 
 function checkSteps(){
