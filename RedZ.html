@@ -90,29 +90,22 @@ background:linear-gradient(90deg,#ff4b4b,#ff0000);
 color:white;
 cursor:pointer;
 
-transition:all .18s cubic-bezier(.2,.8,.2,1);
+transition:all .2s ease;
 transform:translateY(0);
 }
 
-/* PC hover */
+/* Hover effect */
 
-button:hover{
-transform:translateY(-5px) scale(1.05);
-box-shadow:0 10px 25px rgba(255,0,0,0.6);
+button.hover{
+transform:translateY(-6px) scale(1.05);
+box-shadow:0 12px 30px rgba(255,0,0,.6);
 }
 
-/* mobile/emulator press */
+/* Click effect */
 
 button:active{
 transform:translateY(2px) scale(.96);
-box-shadow:0 4px 10px rgba(0,0,0,0.4);
-}
-
-/* JS hover fallback */
-
-button.emu-hover{
-transform:translateY(-5px) scale(1.05);
-box-shadow:0 10px 25px rgba(255,0,0,0.6);
+box-shadow:0 4px 10px rgba(0,0,0,.4);
 }
 
 button:disabled{
@@ -205,6 +198,23 @@ loadstring(game:HttpGet("https://example.com/script.lua"))()
 
 <script>
 
+const btn=document.getElementById("getBtn")
+
+/* HOVER FIX FOR EMULATOR */
+
+btn.addEventListener("mouseenter",()=>btn.classList.add("hover"))
+btn.addEventListener("mouseleave",()=>btn.classList.remove("hover"))
+
+btn.addEventListener("mousemove",()=>btn.classList.add("hover"))
+
+document.addEventListener("mousemove",(e)=>{
+if(!btn.contains(e.target)){
+btn.classList.remove("hover")
+}
+})
+
+/* ADS SYSTEM */
+
 let adOpened=false
 let leftPage=false
 let adStart=0
@@ -217,20 +227,6 @@ const ads=[
 "https://omg10.com/4/10703026",
 "https://omg10.com/4/10703028"
 ]
-
-const btn=document.getElementById("getBtn")
-
-/* EMULATOR HOVER FIX */
-
-btn.addEventListener("mousemove",()=>{
-btn.classList.add("emu-hover")
-})
-
-btn.addEventListener("mouseleave",()=>{
-btn.classList.remove("emu-hover")
-})
-
-/* ADS */
 
 btn.onclick=openAds
 
