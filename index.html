@@ -98,6 +98,26 @@ transform:scale(1.05);
 box-shadow:0 0 20px rgba(255,0,0,0.7);
 }
 
+/* เพิ่มส่วนนี้ */
+
+.video-thumb{
+width:100%;
+border-radius:10px;
+margin-bottom:15px;
+}
+
+.yt-btn{
+display:block;
+text-decoration:none;
+margin-bottom:10px;
+}
+
+.yt-btn button{
+width:100%;
+}
+
+/* ---------------- */
+
 .page{
 display:none;
 }
@@ -188,6 +208,21 @@ loadstring(game:HttpGet("https://raw.githubusercontent
 </textarea>
 
 <button id="copyBtn" onclick="copyText()">📄 Copy script</button>
+
+<!-- เพิ่มส่วนนี้ -->
+
+<img class="video-thumb"
+src="https://img.youtube.com/vi/VIDEO_ID/maxresdefault.jpg">
+
+<a class="yt-btn" href="CHANNEL_LINK" target="_blank">
+<button>❤️ Subscribe Channel</button>
+</a>
+
+<a class="yt-btn" href="VIDEO_LINK" target="_blank">
+<button>💬 Like & Comment</button>
+</a>
+
+<!-- ---------------- -->
 
 </div>
 
