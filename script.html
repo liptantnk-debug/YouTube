@@ -192,6 +192,13 @@ loadstring(game:HttpGet("โตดาาา
 
 <script>
 
+/* ANTI BYPASS */
+
+if(sessionStorage.getItem("accessed")=="true"){
+}else{
+sessionStorage.setItem("accessed","false")
+}
+
 let adOpened=false
 let leftPage=false
 let adStart=0
@@ -209,6 +216,8 @@ const ads=[
 function openAds(){
 
 if(adOpened) return
+
+sessionStorage.setItem("accessed","true")
 
 document.getElementById("getBtn").disabled=true
 
@@ -237,6 +246,11 @@ checkReturn()
 })
 
 function checkReturn(){
+
+if(sessionStorage.getItem("accessed")!="true"){
+location.reload()
+return
+}
 
 if(adOpened && leftPage && mustLeave && !countdownStarted){
 
@@ -300,7 +314,7 @@ progress.style.display="none"
 document.getElementById("page1").classList.remove("active")
 document.getElementById("page2").classList.add("active")
 
-mustLeave=false
+sessionStorage.removeItem("accessed")
 
 }
 
