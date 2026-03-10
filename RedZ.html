@@ -86,47 +86,34 @@ padding:16px;
 font-size:18px;
 border:none;
 border-radius:12px;
-
 background:linear-gradient(90deg,#ff4b4b,#ff0000);
-
 color:white;
 cursor:pointer;
 
-transition:
-transform .18s cubic-bezier(.2,.8,.2,1),
-box-shadow .18s ease,
-filter .18s ease;
-
-transform:translateZ(0);
-will-change:transform;
+transition:all .18s cubic-bezier(.2,.8,.2,1);
+transform:translateY(0);
 }
 
-/* hover */
+/* PC hover */
 
 button:hover{
-
-transform:translateY(-4px) scale(1.04);
-
-box-shadow:
-0 10px 25px rgba(255,0,0,0.55),
-0 0 12px rgba(255,0,0,0.35);
-
-filter:brightness(1.1);
-
+transform:translateY(-5px) scale(1.05);
+box-shadow:0 10px 25px rgba(255,0,0,0.6);
 }
 
-/* click */
+/* mobile/emulator press */
 
 button:active{
-
-transform:translateY(1px) scale(.97);
-
-box-shadow:
-0 4px 10px rgba(0,0,0,0.4);
-
+transform:translateY(2px) scale(.96);
+box-shadow:0 4px 10px rgba(0,0,0,0.4);
 }
 
-/* disabled */
+/* JS hover fallback */
+
+button.emu-hover{
+transform:translateY(-5px) scale(1.05);
+box-shadow:0 10px 25px rgba(255,0,0,0.6);
+}
 
 button:disabled{
 opacity:.6;
@@ -231,7 +218,21 @@ const ads=[
 "https://omg10.com/4/10703028"
 ]
 
-document.getElementById("getBtn").onclick=openAds
+const btn=document.getElementById("getBtn")
+
+/* EMULATOR HOVER FIX */
+
+btn.addEventListener("mousemove",()=>{
+btn.classList.add("emu-hover")
+})
+
+btn.addEventListener("mouseleave",()=>{
+btn.classList.remove("emu-hover")
+})
+
+/* ADS */
+
+btn.onclick=openAds
 
 function openAds(){
 
@@ -243,7 +244,7 @@ let link=document.getElementById("adLink")
 link.href=ad
 link.click()
 
-document.getElementById("getBtn").disabled=true
+btn.disabled=true
 
 adOpened=true
 checking=true
@@ -282,7 +283,7 @@ if(stay<2){
 
 document.getElementById("status").innerText="Please stay on Ads longer"
 
-document.getElementById("getBtn").disabled=false
+btn.disabled=false
 adOpened=false
 leftPage=false
 return
