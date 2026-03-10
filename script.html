@@ -85,18 +85,30 @@ transition:width .1s linear;
 100%{background-position:-200% 0;}
 }
 
+/* ปุ่มที่แก้ใหม่ */
+
 button{
 width:100%;
 padding:16px;
 font-size:18px;
 border:none;
 border-radius:12px;
-background:linear-gradient(90deg,#ff4b4b,#ff0000,#ff4b4b);
-background-size:200% 100%;
 color:white;
 cursor:pointer;
-animation:shine 2s linear infinite;
-transition:.2s;
+
+background:linear-gradient(270deg,#ff0000,#ff4b4b,#ff0000);
+background-size:400% 400%;
+
+animation:btnmove 3s ease infinite;
+
+transform:translateZ(0);
+will-change:transform,background-position;
+}
+
+@keyframes btnmove{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
 }
 
 button:hover{
