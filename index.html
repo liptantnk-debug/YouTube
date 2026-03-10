@@ -184,7 +184,7 @@ if(left && currentStep!=0){
 
 let stay=(Date.now()-leaveTime)/1000
 
-if(stay>=2){
+if(stay>=3){
 completeStep(currentStep)
 }
 
@@ -221,6 +221,7 @@ document.getElementById("unlock").style.display="block"
 
 let adOpened=false
 let adStart=0
+let progressStarted=false
 
 const ads=[
 "https://omg10.com/4/10700946",
@@ -243,12 +244,15 @@ adStart=Date.now()
 
 window.addEventListener("focus",function(){
 
-if(adOpened){
+if(adOpened && !progressStarted){
 
 let stay=(Date.now()-adStart)/1000
 
 if(stay>=3){
+
+progressStarted=true
 startProgress()
+
 }
 
 adOpened=false
