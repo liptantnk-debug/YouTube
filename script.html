@@ -233,17 +233,16 @@ document.getElementById("status").innerText="Return to this page..."
 
 }
 
+/* ตรวจจับการออกจากหน้า */
+
 document.addEventListener("visibilitychange",function(){
-
-if(document.hidden && adOpened){
-leftPage=true
-}
-
-if(!document.hidden){
-checkReturn()
-}
-
+if(document.hidden && adOpened){leftPage=true}
 })
+
+window.addEventListener("focus",checkReturn)
+window.addEventListener("pageshow",checkReturn)
+
+/* เช็คตอนกลับ */
 
 function checkReturn(){
 
@@ -256,7 +255,7 @@ if(adOpened && leftPage && mustLeave && !countdownStarted){
 
 let stayTime=(Date.now()-adStart)/1000
 
-if(stayTime<3){
+if(stayTime<2){
 
 document.getElementById("status").innerText="Please stay on Ads longer"
 
