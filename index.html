@@ -50,11 +50,6 @@ backdrop-filter:blur(6px);
 box-shadow:0 0 25px rgba(0,0,0,0.6);
 }
 
-#status{
-margin-bottom:15px;
-font-size:18px;
-}
-
 .video-thumb{
 width:100%;
 border-radius:10px;
@@ -62,9 +57,12 @@ margin-bottom:15px;
 }
 
 .yt-btn{
-display:block;
 margin-bottom:10px;
-text-decoration:none;
+}
+
+#status{
+margin-bottom:15px;
+font-size:18px;
 }
 
 #progress{
@@ -110,6 +108,10 @@ transform:scale(1.05);
 box-shadow:0 0 20px rgba(255,0,0,0.7);
 }
 
+#getBtn{
+display:none;
+}
+
 .page{
 display:none;
 }
@@ -144,33 +146,6 @@ transition:0.4s;
 top:30px;
 }
 
-.bubble{
-position:fixed;
-border-radius:50%;
-background:rgba(255,255,255,0.15);
-animation:float 10s linear infinite;
-}
-
-@keyframes float{
-0%{transform:translateY(30vh) scale(0.5);opacity:0;}
-20%{opacity:1;}
-100%{transform:translateY(-20vh) scale(1);opacity:0;}
-}
-
-.line{
-position:fixed;
-width:2px;
-height:40px;
-background:rgba(255,255,255,0.4);
-animation:fall 4s linear infinite;
-}
-
-@keyframes fall{
-0%{transform:translateY(-50px);opacity:0;}
-20%{opacity:1;}
-100%{transform:translateY(110vh);opacity:0;}
-}
-
 </style>
 
 </head>
@@ -184,15 +159,11 @@ animation:fall 4s linear infinite;
 <img class="video-thumb"
 src="https://img.youtube.com/vi/VIDEO_ID/maxresdefault.jpg">
 
-<a class="yt-btn" href="CHANNEL_LINK" target="_blank">
-<button>❤️ Subscribe Channel</button>
-</a>
+<button class="yt-btn" onclick="subscribe()">❤️ Subscribe Channel</button>
 
-<a class="yt-btn" href="VIDEO_LINK" target="_blank">
-<button>💬 Like & Comment</button>
-</a>
+<button class="yt-btn" onclick="likeVideo()">💬 Like & Comment</button>
 
-<div id="status">Click Get Link</div>
+<div id="status">Complete steps to unlock Get Link</div>
 
 <div id="progress">
 <div id="bar"></div>
@@ -219,6 +190,36 @@ loadstring(game:HttpGet("https://raw.githubusercontent
 <div id="toast" class="toast">✔ Copied</div>
 
 <script>
+
+let subscribed=false
+let liked=false
+
+function subscribe(){
+
+window.open("CHANNEL_LINK","_blank")
+subscribed=true
+checkSteps()
+
+}
+
+function likeVideo(){
+
+window.open("VIDEO_LINK","_blank")
+liked=true
+checkSteps()
+
+}
+
+function checkSteps(){
+
+if(subscribed && liked){
+
+document.getElementById("status").innerText="Get Link Unlocked"
+document.getElementById("getBtn").style.display="block"
+
+}
+
+}
 
 let adOpened=false
 let leftPage=false
@@ -252,6 +253,18 @@ document.getElementById("status").innerText="Return to this page..."
 
 }
 
+document.addEventListener("visibilitychange",function(){
+
+if(document.hidden && adOpened){
+leftPage=true
+}
+
+if(!document.hidden){
+checkReturn()
+}
+
+})
+
 function checkReturn(){
 
 if(adOpened && leftPage && mustLeave && !countdownStarted){
@@ -277,20 +290,6 @@ leftPage=false
 }
 
 }
-
-document.addEventListener("visibilitychange",function(){
-
-if(document.hidden && adOpened){
-leftPage=true
-}
-
-if(!document.hidden){
-checkReturn()
-}
-
-})
-
-window.addEventListener("focus",checkReturn)
 
 function startCountdown(){
 
@@ -343,20 +342,8 @@ update()
 function copyText(){
 
 let textarea=document.getElementById("text")
-let btn=document.getElementById("copyBtn")
 
-if(navigator.clipboard){
 navigator.clipboard.writeText(textarea.value)
-}else{
-textarea.select()
-document.execCommand("copy")
-}
-
-btn.innerText="✔ Copied"
-
-setTimeout(()=>{
-btn.innerText="📄 Copy Script"
-},1500)
 
 showToast()
 
@@ -373,41 +360,6 @@ toast.classList.remove("show")
 },2000)
 
 }
-
-function createBubble(){
-
-let b=document.createElement("div")
-
-b.className="bubble"
-
-let size=Math.random()*120+40
-
-b.style.width=size+"px"
-b.style.height=size+"px"
-b.style.left=Math.random()*100+"%"
-
-document.body.appendChild(b)
-
-setTimeout(()=>b.remove(),10000)
-
-}
-
-setInterval(createBubble,600)
-
-function createLine(){
-
-let l=document.createElement("div")
-
-l.className="line"
-l.style.left=Math.random()*100+"%"
-
-document.body.appendChild(l)
-
-setTimeout(()=>l.remove(),4000)
-
-}
-
-setInterval(createLine,600)
 
 </script>
 
