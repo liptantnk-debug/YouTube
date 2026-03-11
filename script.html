@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Script Library</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+font-family:Arial;
+}
+
+body{
+
+background:#0f0f0f;
+color:white;
+
+}
+
+header{
+
+background:#151515;
+padding:20px;
+text-align:center;
+
+}
+
+header h1{
+
+font-size:28px;
+
+}
+
+#search{
+
+margin-top:15px;
+padding:10px;
+width:90%;
+max-width:400px;
+
+border:none;
+border-radius:6px;
+
+}
+
+.container{
+
+padding:20px;
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+
+gap:20px;
+
+}
+
+.card{
+
+background:#1c1c1c;
+border-radius:10px;
+
+overflow:hidden;
+
+box-shadow:0 0 10px rgba(0,0,0,0.4);
+
+}
+
+.card img{
+
+width:100%;
+height:160px;
+
+object-fit:cover;
+
+}
+
+.card-body{
+
+padding:15px;
+
+}
+
+.card h2{
+
+font-size:20px;
+
+}
+
+.game{
+
+opacity:0.7;
+font-size:14px;
+
+margin-bottom:10px;
+
+}
+
+textarea{
+
+width:100%;
+
+height:80px;
+
+background:#0f0f0f;
+
+color:#00ff9d;
+
+border:none;
+
+padding:10px;
+
+border-radius:6px;
+
+resize:none;
+
+}
+
+.buttons{
+
+display:flex;
+
+gap:10px;
+
+margin-top:10px;
+
+}
+
+button{
+
+flex:1;
+
+padding:10px;
+
+border:none;
+
+border-radius:6px;
+
+cursor:pointer;
+
+background:#2b2b2b;
+
+color:white;
+
+transition:0.2s;
+
+}
+
+button:hover{
+
+background:#00c97a;
+
+}
+
+.top{
+
+position:absolute;
+
+background:red;
+
+padding:5px 10px;
+
+font-size:12px;
+
+border-radius:5px;
+
+margin:10px;
+
+}
+
+.favorite{
+
+cursor:pointer;
+
+float:right;
+
+font-size:18px;
+
+}
+
+.ad{
+
+margin:30px auto;
+
+text-align:center;
+
+}
+
+footer{
+
+text-align:center;
+
+padding:20px;
+
+opacity:0.6;
+
+}
+
+</style>
+
+</head>
+<body>
+
+<header>
+
+<h1>⚡ Script Library</h1>
+
+<input id="search" placeholder="Search Script...">
+
+</header>
+
+<div class="ad">
+
+<!-- Adsterra / PopAds ใส่โค้ดตรงนี้ -->
+
+AD SPACE
+
+</div>
+
+<div class="container" id="scriptList">
+
+<!-- SCRIPT 1 -->
+
+<div class="card">
+
+<div class="top">🔥 TOP</div>
+
+<img src="https://tr.rbxcdn.com/180DAY-6f54b3f6c2a8a8e4a10d6b8b1c2b2c4c/768/432/Image/Webp/noFilter">
+
+<div class="card-body">
+
+<span class="favorite" onclick="fav(this)">⭐</span>
+
+<h2>Auto Farm</h2>
+
+<p class="game">Game : Blox Fruits</p>
+
+<textarea id="script1">
+loadstring(game:HttpGet("https://example.com/script1"))()
+</textarea>
+
+<div class="buttons">
+
+<button onclick="copyScript('script1')">📋 Copy</button>
+
+<button onclick="downloadScript('script1')">⬇ Download</button>
+
+<button onclick="bypass()">🔗 Get Link</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- SCRIPT 2 -->
+
+<div class="card">
+
+<img src="https://tr.rbxcdn.com/180DAY-f1e2c3d4e5f6/768/432/Image/Webp/noFilter">
+
+<div class="card-body">
+
+<span class="favorite" onclick="fav(this)">⭐</span>
+
+<h2>ESP Player</h2>
+
+<p class="game">Game : Universal</p>
+
+<textarea id="script2">
+loadstring(game:HttpGet("https://example.com/script2"))()
+</textarea>
+
+<div class="buttons">
+
+<button onclick="copyScript('script2')">📋 Copy</button>
+
+<button onclick="downloadScript('script2')">⬇ Download</button>
+
+<button onclick="bypass()">🔗 Get Link</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<footer>
+
+Script Hub © 2026
+
+</footer>
+
+<script>
+
+function copyScript(id){
+
+let text=document.getElementById(id).value
+
+navigator.clipboard.writeText(text)
+
+alert("✅ Script Copied")
+
+}
+
+function downloadScript(id){
+
+let text=document.getElementById(id).value
+
+let blob=new Blob([text],{type:"text/plain"})
+
+let a=document.createElement("a")
+
+a.href=URL.createObjectURL(blob)
+
+a.download="script.txt"
+
+a.click()
+
+}
+
+function fav(el){
+
+if(el.style.color=="gold"){
+
+el.style.color="white"
+
+}else{
+
+el.style.color="gold"
+
+}
+
+}
+
+function bypass(){
+
+window.open("https://example-bypass-link.com")
+
+}
+
+document.getElementById("search").addEventListener("keyup",function(){
+
+let value=this.value.toLowerCase()
+
+let cards=document.querySelectorAll(".card")
+
+cards.forEach(card=>{
+
+let title=card.querySelector("h2").innerText.toLowerCase()
+
+if(title.includes(value)){
+
+card.style.display="block"
+
+}else{
+
+card.style.display="none"
+
+}
+
+})
+
+})
+
+</script>
+
+</body>
+</html>
