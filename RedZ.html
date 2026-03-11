@@ -184,7 +184,11 @@ src="https://img.youtube.com/vi/FCfEYlq-RRg/maxresdefault.jpg">
 <h2>Your Script</h2>
 
 <textarea id="text" readonly>
-loadstring(game:HttpGet("https://example.com/script.lua"))()
+local Settings = {
+JoinTeam = "Pirates"; -- Pirates/Marines
+Translator = true; -- true/false
+}
+loadstring(game:HttpGet("https://raw.githubusercontent.com/PlockScripts/newredz/refs/heads/main/Remake-version.luau"))(Settings)
 </textarea>
 
 <button onclick="copyText()">📄 Copy script</button>
