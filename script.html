@@ -1,307 +1,233 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>ScriptGalaxy</title>
 
 <style>
+
+/* ---------- base ---------- */
 
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial;
+font-family:Arial, Helvetica, sans-serif;
 }
 
 body{
 background:#0b0b0b;
-color:white;
+color:#ffffff;
 min-height:100vh;
 }
 
-/* galaxy stars */
+/* subtle galaxy stars */
 
 body::before{
-
 content:"";
-
 position:fixed;
-
 top:0;
 left:0;
-
 width:100%;
 height:100%;
-
 background-image:
-radial-gradient(white 1px, transparent 1px),
-radial-gradient(white 1px, transparent 1px);
-
+radial-gradient(#ffffff 1px, transparent 1px),
+radial-gradient(#ffffff 1px, transparent 1px);
 background-size:40px 40px,80px 80px;
-
-opacity:0.07;
-
+opacity:0.06;
 pointer-events:none;
-
 }
 
-/* header */
+/* ---------- header ---------- */
 
 header{
-
 display:flex;
 justify-content:space-between;
 align-items:center;
-
 padding:15px 25px;
-
 background:#111;
-
 border-bottom:1px solid #222;
-
+flex-wrap:wrap;
+gap:10px;
 }
 
 .logo{
-
 font-size:22px;
 font-weight:bold;
-
 }
 
 #search{
-
-padding:10px;
-border:none;
+padding:9px 10px;
 border-radius:6px;
+border:none;
 width:220px;
-
+max-width:100%;
 }
 
-/* layout */
+/* ---------- layout ---------- */
 
 .main{
-
 display:flex;
-
+flex-wrap:wrap;
 }
 
 /* sidebar */
 
 .sidebar{
-
 width:200px;
 background:#0f0f0f;
 padding:20px;
-
 border-right:1px solid #222;
-
 }
 
 .sidebar h3{
-
 margin-bottom:10px;
-
 }
 
 .sidebar ul{
-
 list-style:none;
-
 }
 
 .sidebar li{
-
-padding:10px;
+padding:9px;
 border-radius:6px;
 cursor:pointer;
-
 }
 
 .sidebar li:hover{
-
 background:#222;
-
 }
 
 /* content */
 
 .content{
-
 flex:1;
 padding:30px;
-
+min-width:260px;
 }
 
 .grid{
-
 display:grid;
-
-grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
-
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
 gap:20px;
-
 }
 
-/* card */
+/* ---------- script card ---------- */
 
 .card{
-
 background:#151515;
-
 border-radius:10px;
-
 overflow:hidden;
-
-transition:0.3s;
-
 border:1px solid #222;
-
+transition:0.25s;
 }
 
 .card:hover{
-
 transform:translateY(-4px);
-
 }
 
 .card img{
-
 width:100%;
 height:150px;
-
 object-fit:cover;
-
 }
 
 .card-body{
-
 padding:15px;
-
 }
 
 .card-body h3{
-
 margin-bottom:10px;
-
+font-size:18px;
 }
 
+/* script textarea */
+
 textarea{
-
 width:100%;
-
 height:70px;
-
 background:#0f0f0f;
-
 color:#00ff9d;
-
 border:none;
-
 padding:10px;
-
 border-radius:6px;
-
 resize:none;
-
 }
 
 /* buttons */
 
 .buttons{
-
 display:flex;
-
 gap:8px;
-
 margin-top:10px;
-
+flex-wrap:wrap;
 }
 
 button{
-
 flex:1;
-
 padding:8px;
-
 border:none;
-
 border-radius:6px;
-
 background:#222;
-
 color:white;
-
 cursor:pointer;
-
+min-width:70px;
 }
 
 button:hover{
-
-background:white;
-color:black;
-
+background:#ffffff;
+color:#000000;
 }
 
 .counter{
-
 margin-top:8px;
-
 font-size:13px;
-
 opacity:0.7;
-
 }
 
-/* ad */
+/* ---------- ad area ---------- */
 
 .ad{
-
 margin-top:40px;
-
 padding:30px;
-
 text-align:center;
-
 background:#111;
-
 border-radius:10px;
-
 border:1px solid #222;
-
 }
 
-/* footer */
+/* ---------- footer ---------- */
 
 footer{
-
 margin-top:40px;
-
 text-align:center;
-
 padding:20px;
-
 background:#111;
-
 border-top:1px solid #222;
+}
+
+/* ---------- responsive ---------- */
+
+@media(max-width:750px){
+
+.sidebar{
+width:100%;
+border-right:none;
+border-bottom:1px solid #222;
+}
 
 }
 
 </style>
-
 </head>
 
 <body>
 
 <header>
-
 <div class="logo">🌌 ScriptGalaxy</div>
-
 <input id="search" placeholder="Search script...">
-
 </header>
 
 <div class="main">
@@ -313,17 +239,15 @@ border-top:1px solid #222;
 <h3>Categories</h3>
 
 <ul>
-
-<li onclick="filter('all')">All Scripts</li>
-<li onclick="filter('farm')">Auto Farm</li>
-<li onclick="filter('esp')">ESP</li>
-<li onclick="filter('misc')">Misc</li>
-
+<li onclick="filterCategory('all')">All Scripts</li>
+<li onclick="filterCategory('farm')">Auto Farm</li>
+<li onclick="filterCategory('esp')">ESP</li>
+<li onclick="filterCategory('misc')">Misc</li>
 </ul>
 
 </aside>
 
-<!-- content -->
+<!-- main content -->
 
 <section class="content">
 
@@ -331,7 +255,7 @@ border-top:1px solid #222;
 
 <div class="grid">
 
-<!-- script 1 -->
+<!-- SCRIPT 1 -->
 
 <div class="card" data-category="farm">
 
@@ -341,9 +265,7 @@ border-top:1px solid #222;
 
 <h3>Blox Fruits Auto Farm</h3>
 
-<textarea id="script1">
-loadstring(game:HttpGet("https://example.com/script1"))()
-</textarea>
+<textarea id="script1">loadstring(game:HttpGet("https://example.com/script1"))()</textarea>
 
 <div class="buttons">
 
@@ -351,21 +273,16 @@ loadstring(game:HttpGet("https://example.com/script1"))()
 
 <button onclick="downloadScript('script1')">Download</button>
 
-<button onclick="bypass()">Get Link</button>
+<button onclick="openBypass()">Get Link</button>
 
 </div>
 
-<div class="counter" id="count1">
-
-Copied 0 times
+<div class="counter" id="count1">Copied 0 times</div>
 
 </div>
-
 </div>
 
-</div>
-
-<!-- script 2 -->
+<!-- SCRIPT 2 -->
 
 <div class="card" data-category="esp">
 
@@ -375,9 +292,7 @@ Copied 0 times
 
 <h3>Arsenal ESP</h3>
 
-<textarea id="script2">
-loadstring(game:HttpGet("https://example.com/script2"))()
-</textarea>
+<textarea id="script2">loadstring(game:HttpGet("https://example.com/script2"))()</textarea>
 
 <div class="buttons">
 
@@ -385,29 +300,24 @@ loadstring(game:HttpGet("https://example.com/script2"))()
 
 <button onclick="downloadScript('script2')">Download</button>
 
-<button onclick="bypass()">Get Link</button>
+<button onclick="openBypass()">Get Link</button>
 
 </div>
 
-<div class="counter" id="count2">
-
-Copied 0 times
+<div class="counter" id="count2">Copied 0 times</div>
 
 </div>
-
 </div>
 
 </div>
 
-</div>
-
-<!-- ad -->
+<!-- ad section -->
 
 <div class="ad">
 
 <!-- ใส่โค้ดโฆษณา Adsterra / PopAds ตรงนี้ -->
 
-YOUR AD HERE
+YOUR AD CODE HERE
 
 </div>
 
@@ -416,102 +326,98 @@ YOUR AD HERE
 </div>
 
 <footer>
-
 ScriptGalaxy © 2026
-
 </footer>
 
 <script>
 
-/* copy counter */
+/* copy counter storage (session only) */
+let counters = {};
 
-let counters={}
+/* copy script */
 
-function copyScript(id,counter){
+function copyScript(id, counterId){
 
-let text=document.getElementById(id).value
+const text = document.getElementById(id).value;
 
-navigator.clipboard.writeText(text)
+navigator.clipboard.writeText(text);
 
-if(!counters[id]) counters[id]=0
+if(!counters[id]) counters[id] = 0;
 
-counters[id]++
+counters[id]++;
 
-document.getElementById(counter).innerText=
-"Copied "+counters[id]+" times"
+document.getElementById(counterId).textContent =
+"Copied " + counters[id] + " times";
 
 }
 
-/* download */
+/* download script */
 
 function downloadScript(id){
 
-let text=document.getElementById(id).value
+const text = document.getElementById(id).value;
 
-let blob=new Blob([text],{type:"text/plain"})
+const blob = new Blob([text],{type:"text/plain"});
 
-let a=document.createElement("a")
+const a = document.createElement("a");
 
-a.href=URL.createObjectURL(blob)
+a.href = URL.createObjectURL(blob);
 
-a.download="script.txt"
+a.download = "script.txt";
 
-a.click()
+a.click();
 
 }
 
-/* bypass */
+/* bypass link */
 
-function bypass(){
+function openBypass(){
 
-/* เปลี่ยนลิงก์ตรงนี้ */
-
-window.open("https://example-bypass.com")
+window.open("https://example-bypass.com","_blank");
 
 }
 
 /* search */
 
-document.getElementById("search").addEventListener("keyup",function(){
+document.getElementById("search").addEventListener("keyup", function(){
 
-let value=this.value.toLowerCase()
+const value = this.value.toLowerCase();
 
-let cards=document.querySelectorAll(".card")
-
-cards.forEach(card=>{
-
-let title=card.querySelector("h3").innerText.toLowerCase()
-
-card.style.display=title.includes(value)?"block":"none"
-
-})
-
-})
-
-/* filter */
-
-function filter(category){
-
-let cards=document.querySelectorAll(".card")
+const cards = document.querySelectorAll(".card");
 
 cards.forEach(card=>{
 
-if(category==="all"||card.dataset.category===category){
+const title = card.querySelector("h3").innerText.toLowerCase();
 
-card.style.display="block"
+card.style.display = title.includes(value) ? "block" : "none";
+
+});
+
+});
+
+/* category filter */
+
+function filterCategory(category){
+
+const cards = document.querySelectorAll(".card");
+
+cards.forEach(card=>{
+
+if(category==="all" || card.dataset.category === category){
+
+card.style.display="block";
 
 }else{
 
-card.style.display="none"
+card.style.display="none";
 
 }
 
-})
+});
 
 }
 
 </script>
 
 </body>
-
 </html>
